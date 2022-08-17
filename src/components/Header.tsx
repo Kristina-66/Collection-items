@@ -76,7 +76,7 @@ const Header = () => {
             onClick={() => navigate("/")}
             sx={{ cursor: "pointer" }}
           >
-            Task 4
+            Collection items
           </Typography>
           <Box display="flex" sx={{ ml: "auto" }}>
             {!user && (
