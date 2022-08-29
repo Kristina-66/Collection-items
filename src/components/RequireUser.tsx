@@ -1,3 +1,4 @@
+import { Cookie } from "@mui/icons-material";
 import { useCookies } from "react-cookie";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
@@ -7,7 +8,8 @@ import { useAppSelector } from "../redux/store";
 import FullScreenLoader from "./FullScreenLoader";
 
 const RequireUser = ({ allowedRoles }: { allowedRoles: string[] }) => {
-  const [cookies] = useCookies(["logged_in"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["logged_in"]);
+  console.log(cookies);
   const logged_in = cookies.logged_in;
 
   // const { data: user } = userApi.endpoints.getMe.useQuery(null, {
