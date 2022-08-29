@@ -2,6 +2,7 @@ import { useCookies } from "react-cookie";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 import { userApi } from "../redux/api/userApi";
+import { useAppSelector } from "../redux/store";
 
 import FullScreenLoader from "./FullScreenLoader";
 
@@ -9,9 +10,11 @@ const RequireUser = ({ allowedRoles }: { allowedRoles: string[] }) => {
   const [cookies] = useCookies(["logged_in"]);
   const logged_in = cookies.logged_in;
 
-  const { data: user } = userApi.endpoints.getMe.useQuery(null, {
-    skip: !logged_in,
-  });
+  // const { data: user } = userApi.endpoints.getMe.useQuery(null, {
+  //   skip: !logged_in,
+  // });
+  const user = useAppSelector((state) => state.userState.user);
+
   const location = useLocation();
 
   if (logged_in && !user) {

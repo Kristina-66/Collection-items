@@ -46,9 +46,9 @@ const Header = () => {
     useLogoutUserMutation();
 
   useEffect(() => {
-    // if (isSuccess && !user) {
-    //   navigate("/login");
-    // }
+    if (isSuccess && !user) {
+      navigate("/login");
+    }
 
     if (isError) {
       if (Array.isArray((error as any).data.error)) {
@@ -131,19 +131,19 @@ const Header = () => {
           {user && (
             <>
               <Box sx={{ ml: 4 }}>
-            <LoadingButton onClick={() => setOpenCollectionModal(true)}>
-                Create Collection
-              </LoadingButton>
+                <LoadingButton onClick={() => setOpenCollectionModal(true)}>
+                  Create Collection
+                </LoadingButton>
               </Box>
             </>
           )}
         </Toolbar>
-                <CollectionModal
-                  openCollectionModal={openCollectionModal}
-                  setOpenCollectionModal={setOpenCollectionModal}
-                >
-                  <CreateCollection setOpenCollectionModal={setOpenCollectionModal} />
-                </CollectionModal>
+        <CollectionModal
+          openCollectionModal={openCollectionModal}
+          setOpenCollectionModal={setOpenCollectionModal}
+        >
+          <CreateCollection setOpenCollectionModal={setOpenCollectionModal} />
+        </CollectionModal>
       </Container>
     </AppBar>
   );
