@@ -37,6 +37,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "https://collection-items-api.herokuapp.com",
   "eslintConfig": {
     "extends": [
       "react-app",
