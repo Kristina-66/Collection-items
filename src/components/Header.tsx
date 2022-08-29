@@ -46,7 +46,7 @@ const Header = () => {
     useLogoutUserMutation();
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && !user) {
       navigate("/login");
     }
 

@@ -15,7 +15,6 @@ const ProfilePage = () => {
   } = useGetAllCollectionsQuery();
   const user = useAppSelector((state) => state.userState.user);
 
-  //   delete allUsers
   const allUsers = useAppSelector((state) => state.userState.users);
 
   return (
