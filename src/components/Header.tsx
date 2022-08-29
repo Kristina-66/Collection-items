@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userApi } from "../redux/api/userApi";
 
@@ -16,6 +16,8 @@ import { toast } from "react-toastify";
 import { LoadingButton as _LoadingButton } from "@mui/lab";
 import { useAppSelector } from "../redux/store";
 import { useLogoutUserMutation } from "../redux/api/authApi";
+import CollectionModal from "./modals/collection.modal";
+import CreateCollection from "./collection/create-collection";
 
 import { styled } from "@mui/material/styles";
 
@@ -36,13 +38,14 @@ const Header = () => {
     refetchOnMountOrArgChange: true,
   });
 
+  const [openCollectionModal, setOpenCollectionModal] = useState(false);
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.userState.user);
 
-  const [logoutUser, { isLoading, isSuccess, error, isError }] = useLogoutUserMutation();
+  const [logoutUser, { isLoading, isSuccess, error, isError }] =
+    useLogoutUserMutation();
 
   useEffect(() => {
-
     if (isSuccess) {
       navigate("/login");
     }
@@ -111,8 +114,36 @@ const Header = () => {
                 </Box>
               </>
             )}
+            {user && user.role === "admin" && (
+              <>
+                <Box sx={{ ml: 4 }}>
+                  <Tooltip title="Admin" onClick={() => navigate("/admin")}>
+                    <IconButton sx={{ p: 0 }}>
+                      {!isLoadingUser && (
+                        <Avatar alt="admin" src="/static/images/avatar/2.jpg" />
+                      )}
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+              </>
+            )}
           </Box>
+          {user && (
+            <>
+              <Box sx={{ ml: 4 }}>
+            <LoadingButton onClick={() => setOpenCollectionModal(true)}>
+                Create Collection
+              </LoadingButton>
+              </Box>
+            </>
+          )}
         </Toolbar>
+                <CollectionModal
+                  openCollectionModal={openCollectionModal}
+                  setOpenCollectionModal={setOpenCollectionModal}
+                >
+                  <CreateCollection setOpenCollectionModal={setOpenCollectionModal} />
+                </CollectionModal>
       </Container>
     </AppBar>
   );

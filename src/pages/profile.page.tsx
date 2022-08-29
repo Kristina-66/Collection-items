@@ -1,15 +1,25 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 import { useAppSelector } from "../redux/store";
+import CollectionItem from "../components/collection/collection.component";
+import { useGetAllCollectionsQuery } from "../redux/api/collectionApi";
 
 const ProfilePage = () => {
+  const {
+    isLoading,
+    isError,
+    error,
+    data: collections,
+  } = useGetAllCollectionsQuery();
   const user = useAppSelector((state) => state.userState.user);
 
-//   delete allUsers
+  //   delete allUsers
   const allUsers = useAppSelector((state) => state.userState.users);
 
   return (
-    <Container maxWidth="lg">
+    <Container>
       <Box
         sx={{
           backgroundColor: "#5d8c9b",
@@ -38,6 +48,20 @@ const ProfilePage = () => {
         <Typography gutterBottom>
           <strong>Email Address:</strong> {user?.email}
         </Typography>
+        <Typography gutterBottom>
+          <strong>Role:</strong> {user?.role}
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          gap: "20px",
+          flexWrap: "wrap",
+        }}
+      >
+        {collections?.map((collection) => (
+          <CollectionItem key={collection._id} collection={collection} />
+        ))}
       </Box>
     </Container>
   );
