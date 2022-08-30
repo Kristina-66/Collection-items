@@ -11,6 +11,7 @@ import {
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import { LoadingButton } from "@mui/lab";
 import { FC, useEffect, useState } from "react";
 import CollectionModal from "../modals/collection.modal";
 import { useDeleteCollectionMutation } from "../../redux/api/collectionApi";
@@ -19,6 +20,7 @@ import { toast } from "react-toastify";
 import { ICollectionResponse } from "../../redux/api/types";
 import { format, parseISO } from "date-fns";
 import "./collection.styles.css";
+import { useNavigate } from "react-router-dom";
 
 const SERVER_ENDPOINT = process.env.REACT_APP_SERVER_ENDPOINT;
 
@@ -30,6 +32,7 @@ const CollectionItem: FC<ICollectionItemProps> = ({ collection }) => {
   const [openCollectionModal, setOpenCollectionModal] = useState(false);
   const [deleteCollection, { isLoading, error, isSuccess, isError }] =
     useDeleteCollectionMutation();
+    const navigate = useNavigate();
 
   useEffect(() => {
     if (isSuccess) {
@@ -66,7 +69,7 @@ const CollectionItem: FC<ICollectionItemProps> = ({ collection }) => {
             component="img"
             height="250"
             image={collection.image}
-            alt="green iguana"
+            alt="image"
             sx={{ p: "1rem 1rem 0" }}
           />
           <CardContent>
@@ -122,6 +125,14 @@ const CollectionItem: FC<ICollectionItemProps> = ({ collection }) => {
                 >
                   {collection.description}
                 </Typography>
+              </Box>
+              <Box>
+              <LoadingButton
+                  sx={{ mr: 2 }}
+                  onClick={() => navigate("/collection")}
+                >
+                  SignUp
+                </LoadingButton>
               </Box>
               <div className="collection-settings">
                 <li>

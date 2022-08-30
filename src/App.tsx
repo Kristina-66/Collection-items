@@ -10,6 +10,7 @@ import RegisterPage from "./pages/register.page";
 import UnauthorizePage from "./pages/unauthorize.page";
 import RequireUser from "./components/RequireUser";
 import AdminPage from "./pages/admin.page";
+import CollectionPage from "./pages/collection.page";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -29,6 +30,7 @@ function App() {
           </Route>
           <Route path="unauthorized" element={<UnauthorizePage />} />
         </Route>
+        <Route path="collection" element={<CollectionPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
       </Routes>
