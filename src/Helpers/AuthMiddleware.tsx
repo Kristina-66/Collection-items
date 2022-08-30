@@ -1,22 +1,19 @@
 import React from "react";
-import { useCookies } from "react-cookie";
-
 
 import FullScreenLoader from "../components/FullScreenLoader";
 import { userApi } from "../redux/api/userApi";
+import { useAppSelector } from "../redux/store";
 
 type IAuthMiddleware = {
   children: React.ReactElement;
 };
 
 const AuthMiddleware: React.FC<IAuthMiddleware> = ({ children }) => {
-  const [cookies] = useCookies(["logged_in"]);
- 
+  const user = useAppSelector((state) => state.userState.user);
 
   const { isLoading } = userApi.endpoints.getMe.useQuery(null, {
-    skip: !cookies.logged_in,
+    skip: !user,
   });
-
 
   if (isLoading) {
     return <FullScreenLoader />;

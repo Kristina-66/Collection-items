@@ -8,24 +8,21 @@ import { useAppSelector } from "../redux/store";
 import FullScreenLoader from "./FullScreenLoader";
 
 const RequireUser = ({ allowedRoles }: { allowedRoles: string[] }) => {
-  const [cookies, setCookie, removeCookie] = useCookies(["logged_in"]);
-  console.log(cookies);
-  const logged_in = cookies.logged_in;
-
-  // const { data: user } = userApi.endpoints.getMe.useQuery(null, {
-  //   skip: !logged_in,
-  // });
   const user = useAppSelector((state) => state.userState.user);
+
+  const { data: loggedUser } = userApi.endpoints.getMe.useQuery(null, {
+    skip: !user,
+  });
 
   const location = useLocation();
 
-  if (logged_in && !user) {
+  if (user && !loggedUser) {
     return <FullScreenLoader />;
   }
 
-  return logged_in && allowedRoles.includes(user?.role as string) ? (
+  return user && allowedRoles.includes(user?.role as string) ? (
     <Outlet />
-  ) : logged_in && user ? (
+  ) : user ? (
     <Navigate to="/unauthorized" state={{ from: location }} replace />
   ) : (
     <Navigate to="/login" state={{ from: location }} replace />
