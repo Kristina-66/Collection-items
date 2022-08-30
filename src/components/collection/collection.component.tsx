@@ -131,7 +131,7 @@ const CollectionItem: FC<ICollectionItemProps> = ({ collection }) => {
                   sx={{ mr: 2 }}
                   onClick={() => navigate("/collection")}
                 >
-                  SignUp
+                  Open
                 </LoadingButton>
               </Box>
               <div className="collection-settings">
