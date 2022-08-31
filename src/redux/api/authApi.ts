@@ -1,14 +1,15 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { LoginInput } from '../../pages/login.page';
-import { RegisterInput } from '../../pages/register.page';
-import { IGenericResponse } from './types';
-import { userApi } from './userApi';
+import { LoginInput } from "../../pages/login.page";
+import { RegisterInput } from "../../pages/register.page";
+import { logout } from "../features/userSlise";
+import { IGenericResponse } from "./types";
+import { userApi } from "./userApi";
 
 const BASE_URL = process.env.REACT_APP_SERVER_ENDPOINT as string;
 
 export const authApi = createApi({
-  reducerPath: 'authApi',
+  reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `${BASE_URL}api/auth/`,
   }),
@@ -16,8 +17,8 @@ export const authApi = createApi({
     registerUser: builder.mutation<IGenericResponse, RegisterInput>({
       query(data) {
         return {
-          url: 'register',
-          method: 'POST',
+          url: "register",
+          method: "POST",
           body: data,
         };
       },
@@ -28,26 +29,32 @@ export const authApi = createApi({
     >({
       query(data) {
         return {
-          url: 'login',
-          method: 'POST',
+          url: "login",
+          method: "POST",
           body: data,
-          credentials: 'include',
+          credentials: "include",
         };
       },
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
           await dispatch(userApi.endpoints.getMe.initiate(null));
-        } catch (error) { }
+        } catch (error) {}
       },
     }),
 
     logoutUser: builder.mutation<void, void>({
       query() {
         return {
-          url: 'logout',
-          credentials: 'include',
+          url: "logout",
+          credentials: "include",
         };
+      },
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(logout());
+        } catch (error) {}
       },
     }),
   }),

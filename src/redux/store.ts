@@ -6,12 +6,14 @@ import { userApi } from "./api/userApi";
 import { collectionApi } from "./api/collectionApi";
 import collectionReducer from "./features/collectionSlice";
 import userReducer from "./features/userSlise";
+import { itemApi } from "./api/itemApi";
 
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [collectionApi.reducerPath]: collectionApi.reducer,
+    [itemApi.reducerPath]: itemApi.reducer,
     userState: userReducer,
     collectionState: collectionReducer,
   },
@@ -21,6 +23,7 @@ export const store = configureStore({
       authApi.middleware,
       userApi.middleware,
       collectionApi.middleware,
+      itemApi.middleware,
     ]),
 });
 

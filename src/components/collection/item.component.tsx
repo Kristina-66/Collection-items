@@ -13,30 +13,28 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { LoadingButton } from "@mui/lab";
 import { FC, useEffect, useState } from "react";
-import CollectionModal from "../modals/collection.modal";
-import { useDeleteCollectionMutation } from "../../redux/api/collectionApi";
+import { useDeleteItemMutation } from "../../redux/api/itemApi";
 import { toast } from "react-toastify";
-//   import UpdatePost from './update-post';
-import { ICollectionResponse } from "../../redux/api/types";
+import { IItemResponse } from "../../redux/api/types";
 import { format, parseISO } from "date-fns";
-import "./collection.styles.css";
+import "./item.styles.css";
 import { useNavigate } from "react-router-dom";
 
 const SERVER_ENDPOINT = process.env.REACT_APP_SERVER_ENDPOINT;
 
-interface ICollectionItemProps {
-  collection: ICollectionResponse;
+interface IItemItemProps {
+  item: IItemResponse;
 }
 
-const CollectionItem: FC<ICollectionItemProps> = ({ collection }) => {
-  const [openCollectionModal, setOpenCollectionModal] = useState(false);
-  const [deleteCollection, { isLoading, error, isSuccess, isError }] =
-    useDeleteCollectionMutation();
+const Item: FC<IItemItemProps> = ({ item }) => {
+  const [openItemModal, setOpenItemModal] = useState(false);
+  const [deleteItem, { isLoading, error, isSuccess, isError }] =
+    useDeleteItemMutation();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Collection deleted successfully");
+      toast.success("Item deleted successfully");
     }
 
     if (isError) {
@@ -57,7 +55,7 @@ const CollectionItem: FC<ICollectionItemProps> = ({ collection }) => {
 
   const onDeleteHandler = (id: string) => {
     if (window.confirm("Are you sure")) {
-      deleteCollection(id);
+      deleteItem(id);
     }
   };
 
@@ -68,7 +66,7 @@ const CollectionItem: FC<ICollectionItemProps> = ({ collection }) => {
           <CardMedia
             component="img"
             height="250"
-            image={collection.image}
+            image={item.image}
             alt="image"
             sx={{ p: "1rem 1rem 0" }}
           />
@@ -84,14 +82,14 @@ const CollectionItem: FC<ICollectionItemProps> = ({ collection }) => {
                 cursor: "pointer",
               }}
               onClick={() =>
-                navigate(`../collections/${collection._id}`, {
-                  state: collection,
+                navigate(`../../items/${item._id}`, {
+                  state: item,
                 })
               }
             >
-              {collection.name.length > 50
-                ? collection.name.substring(0, 50) + "..."
-                : collection.name}
+              {item.name.length > 50
+                ? item.name.substring(0, 50) + "..."
+                : item.name}
             </Link>
             <Box display="flex" alignItems="center" sx={{ mt: "1rem" }}>
               <Typography
@@ -103,7 +101,7 @@ const CollectionItem: FC<ICollectionItemProps> = ({ collection }) => {
                   mr: "1rem",
                 }}
               >
-                {collection.category}
+                {item.hashtag}
               </Typography>
               <Typography
                 variant="body2"
@@ -111,7 +109,7 @@ const CollectionItem: FC<ICollectionItemProps> = ({ collection }) => {
                   color: "#ffa238",
                 }}
               >
-                {format(parseISO(collection.createdAt), "PPP")}
+                {format(parseISO(item.createdAt), "PPP")}
               </Typography>
             </Box>
           </CardContent>
@@ -123,29 +121,32 @@ const CollectionItem: FC<ICollectionItemProps> = ({ collection }) => {
               sx={{ px: "0.5rem" }}
             >
               <Box display="flex" alignItems="center">
+                {/* <Avatar
+                    alt='cart image'
+                    src={`${SERVER_ENDPOINT}/api/static/users/${item.user.photo}`}
+                  /> */}
                 <Typography
                   variant="body2"
                   sx={{
                     ml: "1rem",
                   }}
                 >
-                  {collection.description}
+                  {item.description}
                 </Typography>
               </Box>
-              <Box></Box>
-              <div className="collection-settings">
+              <div className="item-settings">
                 <li>
                   <MoreHorizOutlinedIcon />
                 </li>
                 <ul className="menu">
-                  <li onClick={() => setOpenCollectionModal(true)}>
+                  <li onClick={() => setOpenItemModal(true)}>
                     <ModeEditOutlineOutlinedIcon
                       fontSize="small"
                       sx={{ mr: "0.6rem" }}
                     />
                     Edit
                   </li>
-                  <li onClick={() => onDeleteHandler(collection._id)}>
+                  <li onClick={() => onDeleteHandler(item._id)}>
                     <DeleteOutlinedIcon
                       fontSize="small"
                       sx={{ mr: "0.6rem" }}
@@ -168,4 +169,4 @@ const CollectionItem: FC<ICollectionItemProps> = ({ collection }) => {
   );
 };
 
-export default CollectionItem;
+export default Item;

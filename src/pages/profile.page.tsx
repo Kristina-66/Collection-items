@@ -1,18 +1,11 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
-import { useEffect } from "react";
-import { toast } from "react-toastify";
+import { Box, Container, Typography } from "@mui/material";
 
 import { useAppSelector } from "../redux/store";
 import CollectionItem from "../components/collection/collection.component";
 import { useGetAllCollectionsQuery } from "../redux/api/collectionApi";
 
 const ProfilePage = () => {
-  const {
-    isLoading,
-    isError,
-    error,
-    data: collections,
-  } = useGetAllCollectionsQuery();
+  const { data: collections } = useGetAllCollectionsQuery();
   const user = useAppSelector((state) => state.userState.user);
 
   const allUsers = useAppSelector((state) => state.userState.users);

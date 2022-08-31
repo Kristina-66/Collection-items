@@ -8,21 +8,28 @@ import { useAppSelector } from "../redux/store";
 import FullScreenLoader from "./FullScreenLoader";
 
 const RequireUser = ({ allowedRoles }: { allowedRoles: string[] }) => {
-  const user = useAppSelector((state) => state.userState.user);
-
-  const { data: loggedUser } = userApi.endpoints.getMe.useQuery(null, {
-    skip: !user,
+  const loggedUser = useAppSelector((state) => state.userState.user);
+  const { isLoading, isFetching } = userApi.endpoints.getMe.useQuery(null, {
+    skip: false,
+    refetchOnMountOrArgChange: true,
   });
+
+  const loading = isLoading || isFetching;
+
+  const user = userApi.endpoints.getMe.useQueryState(null);
+  console.log(user);
 
   const location = useLocation();
 
-  if (user && !loggedUser) {
+  if (loading) {
     return <FullScreenLoader />;
   }
 
-  return user && allowedRoles.includes(user?.role as string) ? (
+  return user.isSuccess &&
+    (loggedUser || user.data) &&
+    allowedRoles.includes(loggedUser?.role as string) ? (
     <Outlet />
-  ) : user ? (
+  ) : loggedUser && user ? (
     <Navigate to="/unauthorized" state={{ from: location }} replace />
   ) : (
     <Navigate to="/login" state={{ from: location }} replace />

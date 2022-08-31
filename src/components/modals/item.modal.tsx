@@ -24,24 +24,21 @@ const MODAL_STYLES: CSSProperties = {
   zIndex: 1000,
 };
 
-type ICollectionModal = {
-  openCollectionModal: boolean;
-  setOpenCollectionModal: (openCollectionModal: boolean) => void;
+type IItemModal = {
+  openItemModal: boolean;
+  setOpenItemModal: (openItemModal: boolean) => void;
   children: React.ReactNode;
 };
 
-const CollectionModal: FC<ICollectionModal> = ({
-  openCollectionModal,
-  setOpenCollectionModal,
+const ItemModal: FC<IItemModal> = ({
+  openItemModal,
+  setOpenItemModal,
   children,
 }) => {
-  if (!openCollectionModal) return null;
+  if (!openItemModal) return null;
   return ReactDom.createPortal(
     <>
-      <div
-        style={OVERLAY_STYLES}
-        onClick={() => setOpenCollectionModal(false)}
-      />
+      <div style={OVERLAY_STYLES} onClick={() => setOpenItemModal(false)} />
       <Container
         maxWidth="sm"
         sx={{ p: "2rem 1rem", borderRadius: 1 }}
@@ -50,8 +47,8 @@ const CollectionModal: FC<ICollectionModal> = ({
         {children}
       </Container>
     </>,
-    document.getElementById("collection-modal") as HTMLElement
+    document.getElementById("item-modal") as HTMLElement
   );
 };
 
-export default CollectionModal;
+export default ItemModal;

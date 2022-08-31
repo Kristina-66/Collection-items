@@ -33,3 +33,14 @@ export interface ICollectionResponse {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface IItemResponse {
+  _id: string;
+  name: string;
+  hashtag: string; 
+  description: string;
+  image: string;
+  owner: IUser;
+  createdAt: string;
+  updatedAt: string;
+}

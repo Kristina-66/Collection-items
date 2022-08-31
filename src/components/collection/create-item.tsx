@@ -6,35 +6,37 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
 import { FC, useEffect } from "react";
 import { toast } from "react-toastify";
-import { useCreateCollectionMutation } from "../../redux/api/collectionApi";
+import { useCreateItemMutation } from "../../redux/api/itemApi";
 
-interface ICreateCollectionProp {
-  setOpenCollectionModal: (openCollectionModal: boolean) => void;
+interface ICreateItemProp {
+  setOpenItemModal: (openItemModal: boolean) => void;
+  collectionId: string;
 }
 
-const createCollectionSchema = object({
+const createItemSchema = object({
   name: string().min(1, "name is required"),
-  category: string().max(20).nonempty("Category is required"),
+  hashtag: string().max(20).nonempty("Category is required"),
   description: string().nonempty("Description is required"),
   image: z.instanceof(File),
 });
 
-export type ICreateCollection = TypeOf<typeof createCollectionSchema>;
+export type ICreateItem = TypeOf<typeof createItemSchema>;
 
-const CreateCollection: FC<ICreateCollectionProp> = ({
-  setOpenCollectionModal,
+const CreateItem: FC<ICreateItemProp> = ({
+  setOpenItemModal,
+  collectionId,
 }) => {
-  const [createCollection, { isLoading, isError, error, isSuccess }] =
-    useCreateCollectionMutation();
+  const [createItem, { isLoading, isError, error, isSuccess }] =
+    useCreateItemMutation();
 
-  const methods = useForm<ICreateCollection>({
-    resolver: zodResolver(createCollectionSchema),
+  const methods = useForm<ICreateItem>({
+    resolver: zodResolver(createItemSchema),
   });
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Collection created successfully");
-      setOpenCollectionModal(false);
+      toast.success("Item5 created successfully");
+      setOpenItemModal(false);
     }
 
     if (isError) {
@@ -60,19 +62,19 @@ const CreateCollection: FC<ICreateCollectionProp> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [methods.formState.isSubmitting]);
 
-  const onSubmitHandler: SubmitHandler<ICreateCollection> = (values) => {
+  const onSubmitHandler: SubmitHandler<ICreateItem> = (values) => {
     const formData = new FormData();
-
+    const data = { ...values, itemCollection: collectionId };
     formData.append("image", values.image);
-    formData.append("data", JSON.stringify(values));
-    createCollection(formData);
+    formData.append("data", JSON.stringify(data));
+    createItem(formData);
   };
 
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" sx={{ mb: 3 }}>
         <Typography variant="h5" component="h1">
-          Create Collection
+          Create Item
         </Typography>
         {isLoading && <CircularProgress size="1rem" color="primary" />}
       </Box>
@@ -84,16 +86,16 @@ const CreateCollection: FC<ICreateCollectionProp> = ({
           onSubmit={methods.handleSubmit(onSubmitHandler)}
         >
           <TextField
-            label="Collection name"
+            label="Item name"
             fullWidth
             sx={{ mb: "1rem" }}
             {...methods.register("name")}
           />
           <TextField
-            label="Category"
+            label="hashtag"
             fullWidth
             sx={{ mb: "1rem" }}
-            {...methods.register("category")}
+            {...methods.register("hashtag")}
           />
           <TextField
             label="Description"
@@ -111,7 +113,7 @@ const CreateCollection: FC<ICreateCollectionProp> = ({
             type="submit"
             loading={isLoading}
           >
-            Create Collection
+            Create Item
           </LoadingButton>
         </Box>
       </FormProvider>
@@ -119,4 +121,4 @@ const CreateCollection: FC<ICreateCollectionProp> = ({
   );
 };
 
-export default CreateCollection;
+export default CreateItem;

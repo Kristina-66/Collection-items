@@ -64,7 +64,7 @@ const Header = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading]);
+  }, [isLoading, isSuccess, user]);
 
   const onLogoutHandler = async () => {
     logoutUser();
