@@ -2,10 +2,10 @@ import { Box, Container, Typography } from "@mui/material";
 
 import { useAppSelector } from "../redux/store";
 import CollectionItem from "../components/collection/collection.component";
-import { useGetAllCollectionsQuery } from "../redux/api/collectionApi";
+import { useGetAllCollectionsForUserQuery } from "../redux/api/collectionApi";
 
 const ProfilePage = () => {
-  const { data: collections } = useGetAllCollectionsQuery();
+  const { data: collections } = useGetAllCollectionsForUserQuery();
   const user = useAppSelector((state) => state.userState.user);
 
   const allUsers = useAppSelector((state) => state.userState.users);

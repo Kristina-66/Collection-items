@@ -56,10 +56,31 @@ export const collectionApi = createApi({
       },
       providesTags: (result, error, id) => [{ type: "Collection", id }],
     }),
-    getAllCollections: builder.query<ICollectionResponse[], void>({
+    getAllCollectionsForUser: builder.query<ICollectionResponse[], void>({
       query() {
         return {
           url: ``,
+          credentials: "include",
+        };
+      },
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ _id }) => ({
+                type: "Collection" as const,
+                _id,
+              })),
+              { type: "Collection", id: "LIST" },
+            ]
+          : [{ type: "Collection", id: "LIST" }],
+      transformResponse: (results: {
+        data: { collections: ICollectionResponse[] };
+      }) => results.data.collections,
+    }),
+    getAllCollections: builder.query<ICollectionResponse[], void>({
+      query() {
+        return {
+          url: `/all`,
           credentials: "include",
         };
       },
@@ -95,5 +116,6 @@ export const {
   useCreateCollectionMutation,
   useDeleteCollectionMutation,
   useUpdateCollectionMutation,
+  useGetAllCollectionsForUserQuery,
   useGetAllCollectionsQuery,
 } = collectionApi;
