@@ -33,9 +33,9 @@ function App() {
           <Route path="collections">
             <Route path=":id" element={<CollectionPage />} />
           </Route>
-        <Route path="items">
-          <Route path=":id" element={<ItemPage />} />
-        </Route>
+          <Route path="items">
+            <Route path=":id" element={<ItemPage />} />
+          </Route>
         </Route>
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />

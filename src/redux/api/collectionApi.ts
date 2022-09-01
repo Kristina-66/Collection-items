@@ -30,7 +30,7 @@ export const collectionApi = createApi({
     >({
       query({ id, collection }) {
         return {
-          url: `/${id}`,
+          url: `/update`,
           method: "PATCH",
           credentials: "include",
           body: collection,
@@ -104,7 +104,7 @@ export const collectionApi = createApi({
           url: ``,
           method: "Delete",
           credentials: "include",
-          body: [id]
+          body: [id],
         };
       },
       invalidatesTags: [{ type: "Collection", id: "LIST" }],

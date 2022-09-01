@@ -16,24 +16,21 @@ const ProfilePage = () => {
         sx={{
           backgroundColor: "#5d8c9b",
           mt: "2rem",
-          height: "15rem",
+          height: "8rem",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
         <Typography
-          variant="h2"
+          variant="h3"
           component="h1"
-          sx={{ color: "#1f1e1e", fontWeight: 500 }}
+          sx={{ color: "#1f1e1e", fontWeight: 100 }}
         >
           Profile Page
         </Typography>
       </Box>
       <Box sx={{ mt: 2 }}>
-        <Typography gutterBottom>
-          <strong>Id:</strong> {user?._id}
-        </Typography>
         <Typography gutterBottom>
           <strong>Full Name:</strong> {user?.name}
         </Typography>
@@ -42,6 +39,21 @@ const ProfilePage = () => {
         </Typography>
         <Typography gutterBottom>
           <strong>Role:</strong> {user?.role}
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          backgroundColor: "#5d8c9b",
+          mt: "2rem",
+          height: "3rem",
+          marginBottom: "2rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Typography variant="h4" sx={{ color: "#1f1e1e", fontWeight: 100 }}>
+          You collections!
         </Typography>
       </Box>
       <Box

@@ -1,4 +1,4 @@
-import { LoadingButton as _LoadingButton } from "@mui/lab";
+import { LoadingButton } from "@mui/lab";
 import { Box, Container, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -8,26 +8,27 @@ import ItemModal from "../components/modals/item.modal";
 import { useGetAllItemsQuery } from "../redux/api/itemApi";
 import { ICollectionResponse } from "../redux/api/types";
 import CreateItem from "../components/collection/create-item";
+import AddIcon from '@mui/icons-material/Add';
 
 import { styled } from "@mui/material/styles";
 
-const LoadingButton = styled(_LoadingButton)`
-  padding: 0.6rem 0;
-  background-color: #3d7587;
-  color: #ffffff;
-  font-weight: 500;
+// const LoadingButton = styled(_LoadingButton)`
+//   padding: 0.6rem 0;
+//   background-color: #3d7587;
+//   color: #ffffff;
+//   font-weight: 500;
 
-  &:hover {
-    background-color: #274c58;
-    transform: translateY(-2px);
-  }
-`;
+//   &:hover {
+//     background-color: #274c58;
+//     transform: translateY(-2px);
+//   }
+// `;
 
 const CollectionPage = () => {
   const [openItemModal, setOpenItemModal] = useState(false);
 
   const location = useLocation();
-  const { _id, name, description, image } =
+  const { _id, name, description, image, category } =
     location.state as ICollectionResponse;
   const {
     data: items,
@@ -61,6 +62,9 @@ const CollectionPage = () => {
         <strong>Name of collection:</strong> {name}
       </Typography>
       <Typography gutterBottom>
+        <strong>Category of collection:</strong> {category}
+      </Typography>
+      <Typography gutterBottom>
         <strong>Description: </strong> {description}
       </Typography>
       <Typography gutterBottom>
@@ -69,17 +73,21 @@ const CollectionPage = () => {
       {items?.length === 0 && (
         <span>This collection doesn't contain any items</span>
       )}
-      <Typography>
+      
         <LoadingButton
           onClick={() => setOpenItemModal(true)}
           variant="contained"
-          sx={{ mt: 1 }}
+          sx={{ mt: 1, backgroundColor: "#5d8c9b", 
+          "&:hover": {
+            backgroundColor: "#304850",
+          }, }}
           disableElevation
           type="submit"
+          endIcon={<AddIcon />}
         >
           Create Item
         </LoadingButton>
-      </Typography>
+      
       <Box
         sx={{
           display: "flex",

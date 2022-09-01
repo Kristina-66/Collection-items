@@ -1,3 +1,7 @@
+import { FC, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
 import {
   Box,
   Card,
@@ -6,21 +10,20 @@ import {
   CardMedia,
   Grid,
   Typography,
-  Link,
 } from "@mui/material";
+import CardHeader from "@mui/material/CardHeader";
+import IconButton from "@mui/material/IconButton";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import { LoadingButton } from "@mui/lab";
-import { FC, useEffect, useState } from "react";
-import CollectionModal from "../modals/collection.modal";
 import { useDeleteCollectionMutation } from "../../redux/api/collectionApi";
-import { toast } from "react-toastify";
-//   import UpdatePost from './update-post';
 import { ICollectionResponse } from "../../redux/api/types";
 import { format, parseISO } from "date-fns";
+import CollectionModal from "../modals/collection.modal";
+
 import "./collection.styles.css";
-import { useNavigate } from "react-router-dom";
+import UpdateCollection from "./update-collection";
 
 const SERVER_ENDPOINT = process.env.REACT_APP_SERVER_ENDPOINT;
 
@@ -64,56 +67,69 @@ const CollectionItem: FC<ICollectionItemProps> = ({ collection }) => {
   return (
     <>
       <Grid item xs={12} md={6} lg={4}>
-        <Card sx={{ maxWidth: 345, overflow: "visible" }}>
+        <Card sx={{ maxWidth: 272, minWidth: 272, minHeight: 506 }}>
+          <CardHeader
+            title={
+              collection?.name?.length > 50
+                ? collection.name.substring(0, 50) + "..."
+                : collection.name
+            }
+            subheader={format(parseISO(collection.createdAt), "PPP")}
+            sx={{
+              backgroundColor: "#5d8c9b",
+              p: "0.1rem 0.4rem",
+              borderRadius: 1,
+              cursor: "pointer",
+              "&:hover": {
+                backgroundColor: "#5d8c9b8c",
+              },
+            }}
+            onClick={() =>
+              navigate(`../collections/${collection._id}`, {
+                state: collection,
+              })
+            }
+          />
           <CardMedia
             component="img"
             height="250"
             image={collection.image}
-            alt="image"
+            alt="image collection"
             sx={{ p: "1rem 1rem 0" }}
           />
           <CardContent>
-            <Link
-              gutterBottom
-              variant="h5"
-              component="a"
+            <Typography
+              variant="body1"
               sx={{
-                color: "#4d4d4d",
-                fontWeight: "bold",
-                height: "64px",
-                cursor: "pointer",
+                backgroundColor: "#dad8d8",
+                p: "0.1rem 0.4rem",
+                borderRadius: 1,
               }}
-              onClick={() =>
-                navigate(`../collections/${collection._id}`, {
-                  state: collection,
-                })
-              }
             >
-              {collection.name.length > 50
-                ? collection.name.substring(0, 50) + "..."
-                : collection.name}
-            </Link>
-            <Box display="flex" alignItems="center" sx={{ mt: "1rem" }}>
-              <Typography
-                variant="body1"
-                sx={{
-                  backgroundColor: "#dad8d8",
-                  p: "0.1rem 0.4rem",
-                  borderRadius: 1,
-                  mr: "1rem",
-                }}
-              >
-                {collection.category}
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  color: "#ffa238",
-                }}
-              >
-                {format(parseISO(collection.createdAt), "PPP")}
-              </Typography>
-            </Box>
+              Category: {collection.category}
+            </Typography>
+
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{
+                ml: "1rem",
+              }}
+            >
+              {collection?.description?.length > 70
+                ? collection.description.substring(0, 70) + "..."
+                : collection.description}
+            </Typography>
+            <Typography
+              variant="subtitle2"
+              color="text.secondary"
+              sx={{
+                ml: "1rem",
+                marginLeft: "7rem",
+              }}
+            >
+              Created by: {collection?.ownerInfo[0]?.name}
+            </Typography>
           </CardContent>
           <CardActions>
             <Box
@@ -122,16 +138,9 @@ const CollectionItem: FC<ICollectionItemProps> = ({ collection }) => {
               width="100%"
               sx={{ px: "0.5rem" }}
             >
-              <Box display="flex" alignItems="center">
-                <Typography
-                  variant="body2"
-                  sx={{
-                    ml: "1rem",
-                  }}
-                >
-                  {collection.description}
-                </Typography>
-              </Box>
+              <IconButton aria-label="add to favorites">
+                <FavoriteIcon />
+              </IconButton>
               <Box></Box>
               <div className="collection-settings">
                 <li>
@@ -158,12 +167,15 @@ const CollectionItem: FC<ICollectionItemProps> = ({ collection }) => {
           </CardActions>
         </Card>
       </Grid>
-      {/* <PostModal
-          openPostModal={openPostModal}
-          setOpenPostModal={setOpenPostModal}
-        >
-          <UpdatePost setOpenPostModal={setOpenPostModal} post={post} />
-        </PostModal> */}
+      <CollectionModal
+        openCollectionModal={openCollectionModal}
+        setOpenCollectionModal={setOpenCollectionModal}
+      >
+        <UpdateCollection
+          setOpenCollectionModal={setOpenCollectionModal}
+          collection={collection}
+        />
+      </CollectionModal>
     </>
   );
 };

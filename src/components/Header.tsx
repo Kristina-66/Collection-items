@@ -4,7 +4,6 @@ import { userApi } from "../redux/api/userApi";
 
 import {
   AppBar,
-  Avatar,
   Box,
   Container,
   IconButton,
@@ -13,25 +12,17 @@ import {
   Typography,
 } from "@mui/material";
 import { toast } from "react-toastify";
-import { LoadingButton as _LoadingButton } from "@mui/lab";
 import { useAppSelector } from "../redux/store";
 import { useLogoutUserMutation } from "../redux/api/authApi";
 import CollectionModal from "./modals/collection.modal";
 import CreateCollection from "./collection/create-collection";
-
-import { styled } from "@mui/material/styles";
-
-const LoadingButton = styled(_LoadingButton)`
-  padding: 0.4rem;
-  background-color: #ffffff;
-  color: #000000;
-  font-weight: 500;
-
-  &:hover {
-    background-color: #ffffff;
-    transform: translateY(-2px);
-  }
-`;
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
+import LogoutIcon from "@mui/icons-material/Logout";
+import LoginIcon from "@mui/icons-material/Login";
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import HomeIcon from "@mui/icons-material/Home";
 
 const Header = () => {
   const { isLoading: isLoadingUser } = userApi.endpoints.getMe.useQuery(null, {
@@ -74,41 +65,48 @@ const Header = () => {
     <AppBar position="static" sx={{ backgroundColor: "#5d8c9b" }}>
       <Container maxWidth="lg">
         <Toolbar>
-          <Typography
-            variant="h6"
+          <IconButton
+            aria-label="<Home"
+            size="large"
             onClick={() => navigate("/")}
-            sx={{ cursor: "pointer" }}
+            sx={{ cursor: "pointer", color: "#2b4047" }}
           >
+            <HomeIcon fontSize="large" />
+          </IconButton>
+          <Typography  variant="h6" sx={{ color: "#2b4047" }}>
             Collection items
           </Typography>
+
           <Box display="flex" sx={{ ml: "auto" }}>
             {!user && (
               <>
-                <LoadingButton
-                  sx={{ mr: 2 }}
-                  onClick={() => navigate("/register")}
-                >
-                  SignUp
-                </LoadingButton>
-                <LoadingButton onClick={() => navigate("/login")}>
-                  Login
-                </LoadingButton>
+                <Tooltip title="SignUp" onClick={() => navigate("/register")}>
+                  <IconButton aria-label="SignUp" size="large">
+                    <PersonAddAltIcon fontSize="inherit" />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Login" onClick={() => navigate("/login")}>
+                  <IconButton aria-label="Login" size="large">
+                    <LoginIcon fontSize="inherit" />
+                  </IconButton>
+                </Tooltip>
               </>
             )}
             {user && (
               <>
-                <LoadingButton onClick={onLogoutHandler} loading={isLoading}>
+                <Tooltip title="Logout" onClick={onLogoutHandler}>
+                  <IconButton aria-label="Logout" size="large">
+                    <LogoutIcon fontSize="inherit" />
+                  </IconButton>
+                </Tooltip>
+                {/* <LoadingButton onClick={onLogoutHandler} loading={isLoading}>
                   Logout
-                </LoadingButton>
-                <Box sx={{ ml: 4 }}>
+                </LoadingButton> */}
+
+                <Box sx={{ ml: 1 }}>
                   <Tooltip title="Profile" onClick={() => navigate("/profile")}>
-                    <IconButton sx={{ p: 0 }}>
-                      {!isLoadingUser && (
-                        <Avatar
-                          alt="Remy Sharp"
-                          src="/static/images/avatar/2.jpg"
-                        />
-                      )}
+                    <IconButton aria-label="Account" size="large">
+                      <AccountCircleIcon fontSize="inherit" />
                     </IconButton>
                   </Tooltip>
                 </Box>
@@ -116,12 +114,10 @@ const Header = () => {
             )}
             {user && user.role === "admin" && (
               <>
-                <Box sx={{ ml: 4 }}>
+                <Box sx={{ ml: 1 }}>
                   <Tooltip title="Admin" onClick={() => navigate("/admin")}>
-                    <IconButton sx={{ p: 0 }}>
-                      {!isLoadingUser && (
-                        <Avatar alt="admin" src="/static/images/avatar/2.jpg" />
-                      )}
+                    <IconButton aria-label="Account" size="large">
+                      <AdminPanelSettingsIcon fontSize="inherit" />
                     </IconButton>
                   </Tooltip>
                 </Box>
@@ -130,10 +126,15 @@ const Header = () => {
           </Box>
           {user && (
             <>
-              <Box sx={{ ml: 4 }}>
-                <LoadingButton onClick={() => setOpenCollectionModal(true)}>
-                  Create Collection
-                </LoadingButton>
+              <Box sx={{ ml: 1 }}>
+                <Tooltip
+                  title="Create collection"
+                  onClick={() => setOpenCollectionModal(true)}
+                >
+                  <IconButton aria-label="Create" size="large">
+                    <CreateNewFolderIcon fontSize="inherit" />
+                  </IconButton>
+                </Tooltip>
               </Box>
             </>
           )}

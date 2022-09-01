@@ -7,7 +7,6 @@ export interface IUser {
   createdAt: Date;
   updatedAt: Date;
   __v: number;
-  
 }
 
 export interface IGenericResponse {
@@ -17,7 +16,7 @@ export interface IGenericResponse {
 
 export interface ICollectionRequest {
   name: string;
-  category: string; 
+  category: string;
   description: string;
   image: string;
   owner: string;
@@ -26,10 +25,11 @@ export interface ICollectionRequest {
 export interface ICollectionResponse {
   _id: string;
   name: string;
-  category: string; 
+  category: string;
   description: string;
   image: string;
   owner: IUser;
+  ownerInfo: IUser[];
   createdAt: string;
   updatedAt: string;
 }
@@ -37,7 +37,7 @@ export interface ICollectionResponse {
 export interface IItemResponse {
   _id: string;
   name: string;
-  hashtag: string; 
+  hashtag: string;
   description: string;
   image: string;
   owner: IUser;

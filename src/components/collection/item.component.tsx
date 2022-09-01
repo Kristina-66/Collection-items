@@ -62,13 +62,13 @@ const Item: FC<IItemItemProps> = ({ item }) => {
   return (
     <>
       <Grid item xs={12} md={6} lg={4}>
-        <Card sx={{ maxWidth: 345, overflow: "visible" }}>
+        <Card sx={{ maxWidth: 272, minWidth: 272, minHeight: 400 }}>
           <CardMedia
             component="img"
             height="250"
             image={item.image}
-            alt="image"
-            sx={{ p: "1rem 1rem 0" }}
+            alt="image item"
+            sx={{ p: "0.5rem 0.5rem 0" }}
           />
           <CardContent>
             <Link
@@ -91,27 +91,24 @@ const Item: FC<IItemItemProps> = ({ item }) => {
                 ? item.name.substring(0, 50) + "..."
                 : item.name}
             </Link>
-            <Box display="flex" alignItems="center" sx={{ mt: "1rem" }}>
-              <Typography
-                variant="body1"
-                sx={{
-                  backgroundColor: "#dad8d8",
-                  p: "0.1rem 0.4rem",
-                  borderRadius: 1,
-                  mr: "1rem",
-                }}
-              >
-                {item.hashtag}
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  color: "#ffa238",
-                }}
-              >
-                {format(parseISO(item.createdAt), "PPP")}
-              </Typography>
-            </Box>
+            <Typography
+              variant="body2"
+              sx={{
+                color: "#4d4d4d",
+              }}
+            >
+              {format(parseISO(item.createdAt), "PPP")}
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                backgroundColor: "#dad8d8",
+                p: "0.1rem 0.4rem",
+                borderRadius: 1,
+              }}
+            >
+              {item.hashtag}
+            </Typography>
           </CardContent>
           <CardActions>
             <Box
@@ -120,20 +117,10 @@ const Item: FC<IItemItemProps> = ({ item }) => {
               width="100%"
               sx={{ px: "0.5rem" }}
             >
-              <Box display="flex" alignItems="center">
-                {/* <Avatar
-                    alt='cart image'
-                    src={`${SERVER_ENDPOINT}/api/static/users/${item.user.photo}`}
-                  /> */}
-                <Typography
-                  variant="body2"
-                  sx={{
-                    ml: "1rem",
-                  }}
-                >
-                  {item.description}
-                </Typography>
-              </Box>
+              <Typography variant="body2" color="text.secondary">
+                {item.description}
+              </Typography>
+
               <div className="item-settings">
                 <li>
                   <MoreHorizOutlinedIcon />
