@@ -1,23 +1,20 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 
 import { logout } from "../features/userSlise";
 import { userApi } from "./userApi";
 import { IGenericResponse } from "./types";
 import { LoginInput } from "../../pages/login.page";
 import { RegisterInput } from "../../pages/register.page";
-
-const BASE_URL = process.env.REACT_APP_SERVER_ENDPOINT as string;
+import customFetchBase from "./customFetchBase";
 
 export const authApi = createApi({
   reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${BASE_URL}api/auth/`,
-  }),
+  baseQuery: customFetchBase,
   endpoints: (builder) => ({
     registerUser: builder.mutation<IGenericResponse, RegisterInput>({
       query(data) {
         return {
-          url: "register",
+          url: "auth/register",
           method: "POST",
           body: data,
         };
@@ -29,7 +26,7 @@ export const authApi = createApi({
     >({
       query(data) {
         return {
-          url: "login",
+          url: "auth/login",
           method: "POST",
           body: data,
           credentials: "include",
@@ -46,7 +43,7 @@ export const authApi = createApi({
     logoutUser: builder.mutation<void, void>({
       query() {
         return {
-          url: "logout",
+          url: "auth/logout",
           credentials: "include",
         };
       },

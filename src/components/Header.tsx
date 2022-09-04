@@ -19,16 +19,11 @@ import LoginIcon from "@mui/icons-material/Login";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import HomeIcon from "@mui/icons-material/Home";
 import { useAppSelector } from "../redux/store";
-import { userApi } from "../redux/api/userApi";
 import { useLogoutUserMutation } from "../redux/api/authApi";
 import CollectionModal from "./modals/collection.modal";
 import CreateCollection from "./collection/create-collection";
 
 const Header = () => {
-  const { isLoading: isLoadingUser } = userApi.endpoints.getMe.useQuery(null, {
-    refetchOnMountOrArgChange: true,
-  });
-
   const [openCollectionModal, setOpenCollectionModal] = useState(false);
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.userState.user);
@@ -37,10 +32,6 @@ const Header = () => {
     useLogoutUserMutation();
 
   useEffect(() => {
-    if (isSuccess && !user) {
-      navigate("/login");
-    }
-
     if (isError) {
       if (Array.isArray((error as any).data.error)) {
         (error as any).data.error.forEach((el: any) =>

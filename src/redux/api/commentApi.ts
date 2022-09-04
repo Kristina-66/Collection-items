@@ -1,14 +1,11 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import customFetchBase from "./customFetchBase";
 import { ICommentResponse } from "./types";
-
-const BASE_URL = process.env.REACT_APP_SERVER_ENDPOINT as string;
 
 export const commentApi = createApi({
   reducerPath: "commentApi",
   tagTypes: ["Comment"],
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${BASE_URL}api/item/comment`,
-  }),
+  baseQuery: customFetchBase,
   endpoints: (builder) => ({
     createComment: builder.mutation<
       ICommentResponse[],
@@ -16,7 +13,7 @@ export const commentApi = createApi({
     >({
       query({ id, data }) {
         return {
-          url: `/${id}`,
+          url: `item/comment/${id}`,
           method: "POST",
           credentials: "include",
           body: data,
@@ -30,7 +27,7 @@ export const commentApi = createApi({
     deleteComment: builder.mutation<ICommentResponse, string>({
       query(id) {
         return {
-          url: `/${id}`,
+          url: `item/comment/${id}`,
           method: "Delete",
           credentials: "include",
           body: [id],

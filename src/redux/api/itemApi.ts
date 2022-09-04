@@ -1,19 +1,16 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import customFetchBase from "./customFetchBase";
 import { IItemResponse, ILike } from "./types";
-
-const BASE_URL = process.env.REACT_APP_SERVER_ENDPOINT as string;
 
 export const itemApi = createApi({
   reducerPath: "itemApi",
   tagTypes: ["Item"],
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${BASE_URL}api/item`,
-  }),
+  baseQuery: customFetchBase,
   endpoints: (builder) => ({
     createItem: builder.mutation<IItemResponse, FormData>({
       query(item) {
         return {
-          url: "",
+          url: "item",
           method: "POST",
           credentials: "include",
           body: item,
@@ -47,7 +44,7 @@ export const itemApi = createApi({
     getItem: builder.query<IItemResponse, string>({
       query(id) {
         return {
-          url: `/${id}`,
+          url: `item/${id}`,
           credentials: "include",
         };
       },
@@ -56,7 +53,7 @@ export const itemApi = createApi({
     getAllItemsInCollection: builder.query<IItemResponse[], string>({
       query(id) {
         return {
-          url: `/${id}`,
+          url: `item/${id}`,
           credentials: "include",
         };
       },
@@ -76,7 +73,7 @@ export const itemApi = createApi({
     getAllItems: builder.query<IItemResponse[], void>({
       query() {
         return {
-          url: `/all`,
+          url: `item/all`,
           credentials: "include",
         };
       },
@@ -97,7 +94,7 @@ export const itemApi = createApi({
     deleteItem: builder.mutation<IItemResponse, string>({
       query(id) {
         return {
-          url: ``,
+          url: `item`,
           method: "Delete",
           credentials: "include",
           body: [id],
@@ -108,7 +105,7 @@ export const itemApi = createApi({
     likeItem: builder.mutation<ILike[], string>({
       query(id) {
         return {
-          url: `/${id}/like`,
+          url: `item/${id}/like`,
           method: "PUT",
           credentials: "include",
         };

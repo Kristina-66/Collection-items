@@ -1,19 +1,16 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import customFetchBase from "./customFetchBase";
 import { ICollectionResponse } from "./types";
-
-const BASE_URL = process.env.REACT_APP_SERVER_ENDPOINT as string;
 
 export const collectionApi = createApi({
   reducerPath: "collectionApi",
   tagTypes: ["Collection"],
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${BASE_URL}api/collection`,
-  }),
+  baseQuery: customFetchBase,
   endpoints: (builder) => ({
     createCollection: builder.mutation<ICollectionResponse, FormData>({
       query(collection) {
         return {
-          url: "",
+          url: "collection",
           method: "POST",
           credentials: "include",
           body: collection,
@@ -30,7 +27,7 @@ export const collectionApi = createApi({
     >({
       query({ id, collection }) {
         return {
-          url: `/update`,
+          url: `collection/update`,
           method: "PATCH",
           credentials: "include",
           body: collection,
@@ -50,7 +47,7 @@ export const collectionApi = createApi({
     getCollection: builder.query<ICollectionResponse, string>({
       query(id) {
         return {
-          url: `/${id}`,
+          url: `collection/${id}`,
           credentials: "include",
         };
       },
@@ -59,7 +56,7 @@ export const collectionApi = createApi({
     getAllCollectionsForUser: builder.query<ICollectionResponse[], void>({
       query() {
         return {
-          url: ``,
+          url: `collection`,
           credentials: "include",
         };
       },
@@ -80,7 +77,7 @@ export const collectionApi = createApi({
     getAllCollections: builder.query<ICollectionResponse[], void>({
       query() {
         return {
-          url: `/all`,
+          url: `collection/all`,
           credentials: "include",
         };
       },
@@ -101,7 +98,7 @@ export const collectionApi = createApi({
     deleteCollection: builder.mutation<ICollectionResponse, string>({
       query(id) {
         return {
-          url: ``,
+          url: `collection`,
           method: "Delete",
           credentials: "include",
           body: [id],
