@@ -1,26 +1,85 @@
-import { Box, Container, Typography } from "@mui/material";
 import { useLocation } from "react-router-dom";
 
+import { format, parseISO } from "date-fns";
+import { Box, Container, Typography } from "@mui/material";
+import { Image } from "mui-image";
+import CommentComponent from "../components/collection/comment.component";
 import { IItemResponse } from "../redux/api/types";
+import { ICommentResponse } from "../redux/api/types";
 
 const ItemPage = () => {
   const location = useLocation();
-  const { _id, name, hashtag, description, image } =
+  const { name, hashtag, description, image, createdAt, comments, ownerName, } =
     location.state as IItemResponse;
+  const comment = location.state as ICommentResponse;
   return (
     <Container maxWidth="lg">
-      <div style={{ height: 50, width: "100%" }}></div>
-      <img src={image} alt="image item" height="250"></img>
-      <Typography gutterBottom>
-        <strong>Name of item:</strong> {name}
-      </Typography>
-      <Typography gutterBottom>
-        <strong>Hashtag: </strong> {hashtag}
-      </Typography>
-      <Typography gutterBottom>
-        <strong>Description: </strong> {description}
-      </Typography>
-      <div style={{ height: 50, width: "100%" }}></div>
+      <Box sx={{ mt: 2 }}>
+        <Image src={image} fit="scale-down" height={300} />
+      </Box>
+      <Box
+        sx={{
+          bgcolor: "background.paper",
+          pt: 4,
+          pb: 6,
+        }}
+      >
+        <Container maxWidth="sm">
+          <Typography
+            component="h1"
+            variant="h2"
+            align="center"
+            color="text.primary"
+            gutterBottom
+          >
+            {name}
+          </Typography>
+
+          <Typography
+            variant="h5"
+            align="center"
+            color="text.secondary"
+            paragraph
+          >
+            {hashtag}
+          </Typography>
+          <Typography
+            variant="h6"
+            align="center"
+            color="text.secondary"
+            paragraph
+          >
+            {description}
+          </Typography>
+          <Typography
+            variant="h6"
+            align="center"
+            color="text.secondary"
+            paragraph
+          >
+            <strong>Created: </strong>
+            {format(parseISO(createdAt), "PPP")}
+          </Typography>
+
+          <Typography
+            variant="h6"
+            align="center"
+            color="text.secondary"
+            paragraph
+          >
+            <strong>Collection:</strong>
+          </Typography>
+          <Typography
+            variant="h6"
+            align="center"
+            color="text.secondary"
+            paragraph
+          >
+            <strong>Owner:</strong>{ownerName}
+          </Typography>
+        </Container>
+      </Box>
+
       <Box
         sx={{
           display: "flex",
@@ -28,6 +87,7 @@ const ItemPage = () => {
           flexWrap: "wrap",
         }}
       ></Box>
+      <CommentComponent comments={comments} />
     </Container>
   );
 };

@@ -31,7 +31,7 @@ function App() {
           </Route>
           <Route path="unauthorized" element={<UnauthorizePage />} />
           <Route path="collections">
-            <Route path=":id" element={<CollectionPage />} />
+            <Route path=":id" element={<CollectionPage/>} />
           </Route>
           <Route path="items">
             <Route path=":id" element={<ItemPage />} />

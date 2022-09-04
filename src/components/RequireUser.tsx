@@ -1,7 +1,7 @@
-import { Cookie } from "@mui/icons-material";
 import { useCookies } from "react-cookie";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
+import { Cookie } from "@mui/icons-material";
 import { userApi } from "../redux/api/userApi";
 import { useAppSelector } from "../redux/store";
 

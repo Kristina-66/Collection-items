@@ -28,7 +28,7 @@ export interface ICollectionResponse {
   category: string;
   description: string;
   image: string;
-  owner: IUser;
+  owner: string;
   ownerInfo: IUser[];
   createdAt: string;
   updatedAt: string;
@@ -40,7 +40,28 @@ export interface IItemResponse {
   hashtag: string;
   description: string;
   image: string;
-  owner: IUser;
+  owner: string;
+  likes: ILike[];
+  comments: ICommentResponse[];
+  ownerInfo: IUser[];
+  ownerName: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ICommentResponse {
+  _id: string;
+  name: string;
+  email: string;
+  comment: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ILike {
+  _id: string;
+  user: string;
+  item: string;
   createdAt: string;
   updatedAt: string;
 }

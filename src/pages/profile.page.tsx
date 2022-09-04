@@ -1,10 +1,14 @@
-import { Box, Container, Typography } from "@mui/material";
+import { useState } from "react";
 
+import { Box, Container, IconButton, Tooltip, Typography } from "@mui/material";
+import PersonIcon from "@mui/icons-material/Person";
+import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 import { useAppSelector } from "../redux/store";
 import CollectionItem from "../components/collection/collection.component";
 import { useGetAllCollectionsForUserQuery } from "../redux/api/collectionApi";
 
 const ProfilePage = () => {
+  const [openCollectionModal, setOpenCollectionModal] = useState(false);
   const { data: collections } = useGetAllCollectionsForUserQuery();
   const user = useAppSelector((state) => state.userState.user);
 
@@ -15,52 +19,83 @@ const ProfilePage = () => {
       <Box
         sx={{
           backgroundColor: "#5d8c9b",
-          mt: "2rem",
-          height: "8rem",
+          mt: "1rem",
+          height: "6rem",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
+        <PersonIcon fontSize="large" sx={{ color: "white" }} />
         <Typography
-          variant="h3"
+          variant="h4"
           component="h1"
-          sx={{ color: "#1f1e1e", fontWeight: 100 }}
+          sx={{ color: "white", fontWeight: 100 }}
         >
           Profile Page
         </Typography>
       </Box>
-      <Box sx={{ mt: 2 }}>
-        <Typography gutterBottom>
-          <strong>Full Name:</strong> {user?.name}
-        </Typography>
-        <Typography gutterBottom>
-          <strong>Email Address:</strong> {user?.email}
-        </Typography>
-        <Typography gutterBottom>
-          <strong>Role:</strong> {user?.role}
-        </Typography>
+      <Box
+        sx={{
+          bgcolor: "background.paper",
+          pt: 6,
+          pb: 3,
+        }}
+      >
+        <Container maxWidth="sm">
+          <Typography
+            component="h3"
+            variant="h3"
+            align="center"
+            color="text.primary"
+            gutterBottom
+          >
+            {user?.name}
+          </Typography>
+
+          <Typography
+            variant="h5"
+            align="center"
+            color="text.secondary"
+            paragraph
+          >
+            {user?.email}
+          </Typography>
+        </Container>
       </Box>
       <Box
         sx={{
-          backgroundColor: "#5d8c9b",
-          mt: "2rem",
+          bgcolor: "#dad8d8",
+          mt: "1rem",
           height: "3rem",
-          marginBottom: "2rem",
+          mb: "2rem",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <Typography variant="h4" sx={{ color: "#1f1e1e", fontWeight: 100 }}>
-          You collections!
+        <Typography variant="h5" sx={{ color: "#212121", fontWeight: 100 }}>
+          Your collections
         </Typography>
+        <Tooltip
+          title="Create collection"
+          onClick={() => setOpenCollectionModal(true)}
+        >
+          <IconButton
+            aria-label="Create"
+            size="large"
+            sx={{ color: "#212121" }}
+          >
+            <CreateNewFolderIcon fontSize="inherit" />
+          </IconButton>
+        </Tooltip>
       </Box>
       <Box
         sx={{
           display: "flex",
           gap: "20px",
           flexWrap: "wrap",
+          mb: 2,
         }}
       >
         {collections?.map((collection) => (

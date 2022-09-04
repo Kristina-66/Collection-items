@@ -1,11 +1,12 @@
-import { Box, CircularProgress, TextField, Typography } from "@mui/material";
+import { FC, useEffect } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import FileUpload from "../FileUpload/FileUpload";
+
+import { toast } from "react-toastify";
 import { object, string, TypeOf, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
-import { FC, useEffect } from "react";
-import { toast } from "react-toastify";
+import { Box, CircularProgress, TextField, Typography } from "@mui/material";
+import FileUpload from "../FileUpload/FileUpload";
 import { useCreateCollectionMutation } from "../../redux/api/collectionApi";
 
 interface ICreateCollectionProp {
@@ -107,7 +108,10 @@ const CreateCollection: FC<ICreateCollectionProp> = ({
           <LoadingButton
             variant="contained"
             fullWidth
-            sx={{ py: "0.8rem", mt: 4, backgroundColor: "#2363eb" }}
+            sx={{ py: "0.8rem", mt: 4, backgroundColor: "#5d8c9b",
+            "&:hover": {
+              backgroundColor: "#304850",
+            }, }}
             type="submit"
             loading={isLoading}
           >

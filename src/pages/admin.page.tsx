@@ -1,26 +1,29 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Typography } from "@mui/material";
+
+import UserList from "../components/UserList";
 
 const AdminPage = () => {
   return (
-    <Container maxWidth='lg'>
+    <Container maxWidth="lg">
       <Box
         sx={{
-          backgroundColor: '#ece9e9',
-          mt: '2rem',
-          height: '15rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          backgroundColor: "#5d8c9b",
+          mt: "1rem",
+          height: "6rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
         <Typography
-          variant='h2'
-          component='h1'
-          sx={{ color: '#1f1e1e', fontWeight: 500 }}
+          variant="h4"
+          component="h1"
+          sx={{ color: "white", fontWeight: 100 }}
         >
           Admin Page
         </Typography>
       </Box>
+      <UserList />
     </Container>
   );
 };

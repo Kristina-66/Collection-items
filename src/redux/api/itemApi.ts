@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IItemResponse } from "./types";
+import { IItemResponse, ILike } from "./types";
 
 const BASE_URL = process.env.REACT_APP_SERVER_ENDPOINT as string;
 
@@ -84,6 +84,16 @@ export const itemApi = createApi({
       },
       invalidatesTags: [{ type: "Item", id: "LIST" }],
     }),
+    likeItem: builder.mutation<ILike[], string>({
+      query(id) {
+        return {
+          url: `/${id}/like`,
+          method: "PUT",
+          credentials: "include",
+        };
+      },
+      transformResponse: (data: { like: ILike[] }) => data.like,
+    }),
   }),
 });
 
@@ -92,4 +102,5 @@ export const {
   useDeleteItemMutation,
   useUpdateItemMutation,
   useGetAllItemsQuery,
+  useLikeItemMutation,
 } = itemApi;

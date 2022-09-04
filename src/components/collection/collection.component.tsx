@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
+import { format, parseISO } from "date-fns";
 import {
   Box,
   Card,
@@ -12,18 +13,17 @@ import {
   Typography,
 } from "@mui/material";
 import CardHeader from "@mui/material/CardHeader";
-import IconButton from "@mui/material/IconButton";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import CollectionsIcon from "@mui/icons-material/Collections";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { useDeleteCollectionMutation } from "../../redux/api/collectionApi";
 import { ICollectionResponse } from "../../redux/api/types";
-import { format, parseISO } from "date-fns";
+import { useAppSelector } from "../../redux/store";
 import CollectionModal from "../modals/collection.modal";
+import UpdateCollection from "./update-collection";
 
 import "./collection.styles.css";
-import UpdateCollection from "./update-collection";
 
 const SERVER_ENDPOINT = process.env.REACT_APP_SERVER_ENDPOINT;
 
@@ -32,6 +32,8 @@ interface ICollectionItemProps {
 }
 
 const CollectionItem: FC<ICollectionItemProps> = ({ collection }) => {
+  const user = useAppSelector((state) => state.userState.user);
+  const isAdmin = user?.role === "admin";
   const [openCollectionModal, setOpenCollectionModal] = useState(false);
   const [deleteCollection, { isLoading, error, isSuccess, isError }] =
     useDeleteCollectionMutation();
@@ -69,6 +71,9 @@ const CollectionItem: FC<ICollectionItemProps> = ({ collection }) => {
       <Grid item xs={12} md={6} lg={4}>
         <Card sx={{ maxWidth: 272, minWidth: 272, minHeight: 506 }}>
           <CardHeader
+            avatar={
+              <CollectionsIcon fontSize="large" sx={{ color: "#2b4047d6" }} />
+            }
             title={
               collection?.name?.length > 50
                 ? collection.name.substring(0, 50) + "..."
@@ -76,12 +81,12 @@ const CollectionItem: FC<ICollectionItemProps> = ({ collection }) => {
             }
             subheader={format(parseISO(collection.createdAt), "PPP")}
             sx={{
-              backgroundColor: "#5d8c9b",
+              bgcolor: "#dad8d8",
               p: "0.1rem 0.4rem",
               borderRadius: 1,
               cursor: "pointer",
               "&:hover": {
-                backgroundColor: "#5d8c9b8c",
+                bgcolor: "#5d8c9b8c",
               },
             }}
             onClick={() =>
@@ -101,14 +106,13 @@ const CollectionItem: FC<ICollectionItemProps> = ({ collection }) => {
             <Typography
               variant="body1"
               sx={{
-                backgroundColor: "#dad8d8",
+                bgcolor: "#dad8d8",
                 p: "0.1rem 0.4rem",
                 borderRadius: 1,
               }}
             >
               Category: {collection.category}
             </Typography>
-
             <Typography
               variant="body2"
               color="text.secondary"
@@ -131,40 +135,39 @@ const CollectionItem: FC<ICollectionItemProps> = ({ collection }) => {
               Created by: {collection?.ownerInfo[0]?.name}
             </Typography>
           </CardContent>
-          <CardActions>
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              width="100%"
-              sx={{ px: "0.5rem" }}
-            >
-              <IconButton aria-label="add to favorites">
-                <FavoriteIcon />
-              </IconButton>
-              <Box></Box>
-              <div className="collection-settings">
-                <li>
-                  <MoreHorizOutlinedIcon />
-                </li>
-                <ul className="menu">
-                  <li onClick={() => setOpenCollectionModal(true)}>
-                    <ModeEditOutlineOutlinedIcon
-                      fontSize="small"
-                      sx={{ mr: "0.6rem" }}
-                    />
-                    Edit
+          {user && (isAdmin || collection.owner === user?._id) && (
+            <CardActions>
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                width="100%"
+                sx={{ px: "0.5rem" }}
+              >
+                <Box></Box>
+                <div className="collection-settings">
+                  <li>
+                    <MoreHorizOutlinedIcon />
                   </li>
-                  <li onClick={() => onDeleteHandler(collection._id)}>
-                    <DeleteOutlinedIcon
-                      fontSize="small"
-                      sx={{ mr: "0.6rem" }}
-                    />
-                    Delete
-                  </li>
-                </ul>
-              </div>
-            </Box>
-          </CardActions>
+                  <ul className="menu">
+                    <li onClick={() => setOpenCollectionModal(true)}>
+                      <ModeEditOutlineOutlinedIcon
+                        fontSize="small"
+                        sx={{ mr: "0.6rem" }}
+                      />
+                      Edit
+                    </li>
+                    <li onClick={() => onDeleteHandler(collection._id)}>
+                      <DeleteOutlinedIcon
+                        fontSize="small"
+                        sx={{ mr: "0.6rem" }}
+                      />
+                      Delete
+                    </li>
+                  </ul>
+                </div>
+              </Box>
+            </CardActions>
+          )}
         </Card>
       </Grid>
       <CollectionModal

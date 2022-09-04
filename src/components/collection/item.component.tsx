@@ -1,3 +1,8 @@
+import { FC, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { format, parseISO } from "date-fns";
+import { toast } from "react-toastify";
 import {
   Box,
   Card,
@@ -11,22 +16,20 @@ import {
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import { LoadingButton } from "@mui/lab";
-import { FC, useEffect, useState } from "react";
 import { useDeleteItemMutation } from "../../redux/api/itemApi";
-import { toast } from "react-toastify";
 import { IItemResponse } from "../../redux/api/types";
-import { format, parseISO } from "date-fns";
+import LikeCount from "./like-count";
+import CommentItem from "./comment-item";
+
 import "./item.styles.css";
-import { useNavigate } from "react-router-dom";
 
 const SERVER_ENDPOINT = process.env.REACT_APP_SERVER_ENDPOINT;
 
-interface IItemItemProps {
+interface IItemProps {
   item: IItemResponse;
 }
 
-const Item: FC<IItemItemProps> = ({ item }) => {
+const Item: FC<IItemProps> = ({ item }) => {
   const [openItemModal, setOpenItemModal] = useState(false);
   const [deleteItem, { isLoading, error, isSuccess, isError }] =
     useDeleteItemMutation();
@@ -109,6 +112,15 @@ const Item: FC<IItemItemProps> = ({ item }) => {
             >
               {item.hashtag}
             </Typography>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{
+                p: "0.1rem 0.4rem",
+              }}
+            >
+              {item.description}
+            </Typography>
           </CardContent>
           <CardActions>
             <Box
@@ -117,10 +129,9 @@ const Item: FC<IItemItemProps> = ({ item }) => {
               width="100%"
               sx={{ px: "0.5rem" }}
             >
-              <Typography variant="body2" color="text.secondary">
-                {item.description}
-              </Typography>
-
+              <LikeCount likes={item.likes} itemId={item._id} />
+              <CommentItem item={item} />
+              <Box></Box>
               <div className="item-settings">
                 <li>
                   <MoreHorizOutlinedIcon />
@@ -146,12 +157,6 @@ const Item: FC<IItemItemProps> = ({ item }) => {
           </CardActions>
         </Card>
       </Grid>
-      {/* <PostModal
-          openPostModal={openPostModal}
-          setOpenPostModal={setOpenPostModal}
-        >
-          <UpdatePost setOpenPostModal={setOpenPostModal} post={post} />
-        </PostModal> */}
     </>
   );
 };

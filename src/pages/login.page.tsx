@@ -2,11 +2,11 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
-import { Box, Container, Typography } from "@mui/material";
+import { toast } from "react-toastify";
 import { object, string, TypeOf } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Box, Container, Typography } from "@mui/material";
 import { LoadingButton as _LoadingButton } from "@mui/lab";
-import { toast } from "react-toastify";
 import FormInput from "../components/FormInput";
 import { useLoginUserMutation } from "../redux/api/authApi";
 
@@ -36,9 +36,7 @@ const loginSchema = object({
   email: string()
     .nonempty("Email address is required")
     .email("Email Address is invalid"),
-  password: string()
-    .nonempty("Password is required")
-    .min(1),
+  password: string().nonempty("Password is required").min(1),
 });
 
 export type LoginInput = TypeOf<typeof loginSchema>;

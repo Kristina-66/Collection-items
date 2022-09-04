@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IUser } from '../api/types';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IUser } from "../api/types";
 
-type Status = 'block' | 'active'
-type Roles = 'admin' | 'user'
+type Status = "block" | "active";
+type Roles = "admin" | "user";
 interface INormolizedUsers {
   id: string;
   name: string;
@@ -25,7 +25,7 @@ const initialState: IUserState = {
 
 export const userSlice = createSlice({
   initialState,
-  name: 'userSlice',
+  name: "userSlice",
   reducers: {
     logout: (state) => {
       state.user = null;

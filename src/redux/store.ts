@@ -4,9 +4,11 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { authApi } from "./api/authApi";
 import { userApi } from "./api/userApi";
 import { collectionApi } from "./api/collectionApi";
+import { itemApi } from "./api/itemApi";
+import { commentApi } from "./api/commentApi";
 import collectionReducer from "./features/collectionSlice";
 import userReducer from "./features/userSlise";
-import { itemApi } from "./api/itemApi";
+import commentReducer from "./features/commentSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +16,7 @@ export const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [collectionApi.reducerPath]: collectionApi.reducer,
     [itemApi.reducerPath]: itemApi.reducer,
+    [commentApi.reducerPath]: commentApi.reducer,
     userState: userReducer,
     collectionState: collectionReducer,
   },
@@ -24,6 +27,7 @@ export const store = configureStore({
       userApi.middleware,
       collectionApi.middleware,
       itemApi.middleware,
+      commentApi.middleware,
     ]),
 });
 

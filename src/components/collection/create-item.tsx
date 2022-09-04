@@ -1,12 +1,13 @@
-import { Box, CircularProgress, TextField, Typography } from "@mui/material";
+import { FC, useEffect } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import FileUpload from "../FileUpload/FileUpload";
+
+import { toast } from "react-toastify";
 import { object, string, TypeOf, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
-import { FC, useEffect } from "react";
-import { toast } from "react-toastify";
+import { Box, CircularProgress, TextField, Typography } from "@mui/material";
 import { useCreateItemMutation } from "../../redux/api/itemApi";
+import FileUpload from "../FileUpload/FileUpload";
 
 interface ICreateItemProp {
   setOpenItemModal: (openItemModal: boolean) => void;
@@ -35,7 +36,7 @@ const CreateItem: FC<ICreateItemProp> = ({
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Item5 created successfully");
+      toast.success("Item created successfully");
       setOpenItemModal(false);
     }
 
@@ -109,7 +110,14 @@ const CreateItem: FC<ICreateItemProp> = ({
           <LoadingButton
             variant="contained"
             fullWidth
-            sx={{ py: "0.8rem", mt: 4, backgroundColor: "#2363eb" }}
+            sx={{
+              py: "0.8rem",
+              mt: 4,
+              backgroundColor: "#5d8c9b",
+              "&:hover": {
+                backgroundColor: "#304850",
+              },
+            }}
             type="submit"
             loading={isLoading}
           >

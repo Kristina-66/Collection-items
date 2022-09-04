@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { userApi } from "../redux/api/userApi";
 
+import { toast } from "react-toastify";
 import {
   AppBar,
   Box,
@@ -11,11 +11,6 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { toast } from "react-toastify";
-import { useAppSelector } from "../redux/store";
-import { useLogoutUserMutation } from "../redux/api/authApi";
-import CollectionModal from "./modals/collection.modal";
-import CreateCollection from "./collection/create-collection";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
@@ -23,6 +18,11 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import HomeIcon from "@mui/icons-material/Home";
+import { useAppSelector } from "../redux/store";
+import { userApi } from "../redux/api/userApi";
+import { useLogoutUserMutation } from "../redux/api/authApi";
+import CollectionModal from "./modals/collection.modal";
+import CreateCollection from "./collection/create-collection";
 
 const Header = () => {
   const { isLoading: isLoadingUser } = userApi.endpoints.getMe.useQuery(null, {
@@ -66,14 +66,14 @@ const Header = () => {
       <Container maxWidth="lg">
         <Toolbar>
           <IconButton
-            aria-label="<Home"
+            aria-label="Home"
             size="large"
             onClick={() => navigate("/")}
-            sx={{ cursor: "pointer", color: "#2b4047" }}
+            sx={{ cursor: "pointer", color: "white" }}
           >
             <HomeIcon fontSize="large" />
           </IconButton>
-          <Typography  variant="h6" sx={{ color: "#2b4047" }}>
+          <Typography variant="h6" sx={{ color: "white" }}>
             Collection items
           </Typography>
 
@@ -81,12 +81,20 @@ const Header = () => {
             {!user && (
               <>
                 <Tooltip title="SignUp" onClick={() => navigate("/register")}>
-                  <IconButton aria-label="SignUp" size="large">
+                  <IconButton
+                    aria-label="SignUp"
+                    size="large"
+                    sx={{ color: "white" }}
+                  >
                     <PersonAddAltIcon fontSize="inherit" />
                   </IconButton>
                 </Tooltip>
                 <Tooltip title="Login" onClick={() => navigate("/login")}>
-                  <IconButton aria-label="Login" size="large">
+                  <IconButton
+                    aria-label="Login"
+                    size="large"
+                    sx={{ color: "white" }}
+                  >
                     <LoginIcon fontSize="inherit" />
                   </IconButton>
                 </Tooltip>
@@ -95,17 +103,21 @@ const Header = () => {
             {user && (
               <>
                 <Tooltip title="Logout" onClick={onLogoutHandler}>
-                  <IconButton aria-label="Logout" size="large">
+                  <IconButton
+                    aria-label="Logout"
+                    size="large"
+                    sx={{ color: "white" }}
+                  >
                     <LogoutIcon fontSize="inherit" />
                   </IconButton>
                 </Tooltip>
-                {/* <LoadingButton onClick={onLogoutHandler} loading={isLoading}>
-                  Logout
-                </LoadingButton> */}
-
                 <Box sx={{ ml: 1 }}>
                   <Tooltip title="Profile" onClick={() => navigate("/profile")}>
-                    <IconButton aria-label="Account" size="large">
+                    <IconButton
+                      aria-label="Account"
+                      size="large"
+                      sx={{ color: "white" }}
+                    >
                       <AccountCircleIcon fontSize="inherit" />
                     </IconButton>
                   </Tooltip>
@@ -116,7 +128,11 @@ const Header = () => {
               <>
                 <Box sx={{ ml: 1 }}>
                   <Tooltip title="Admin" onClick={() => navigate("/admin")}>
-                    <IconButton aria-label="Account" size="large">
+                    <IconButton
+                      aria-label="Account"
+                      size="large"
+                      sx={{ color: "white" }}
+                    >
                       <AdminPanelSettingsIcon fontSize="inherit" />
                     </IconButton>
                   </Tooltip>
@@ -131,7 +147,11 @@ const Header = () => {
                   title="Create collection"
                   onClick={() => setOpenCollectionModal(true)}
                 >
-                  <IconButton aria-label="Create" size="large">
+                  <IconButton
+                    aria-label="Create"
+                    size="large"
+                    sx={{ color: "white" }}
+                  >
                     <CreateNewFolderIcon fontSize="inherit" />
                   </IconButton>
                 </Tooltip>

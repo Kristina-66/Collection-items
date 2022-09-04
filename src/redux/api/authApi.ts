@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+import { logout } from "../features/userSlise";
+import { userApi } from "./userApi";
+import { IGenericResponse } from "./types";
 import { LoginInput } from "../../pages/login.page";
 import { RegisterInput } from "../../pages/register.page";
-import { logout } from "../features/userSlise";
-import { IGenericResponse } from "./types";
-import { userApi } from "./userApi";
 
 const BASE_URL = process.env.REACT_APP_SERVER_ENDPOINT as string;
 
