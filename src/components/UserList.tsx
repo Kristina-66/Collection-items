@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import { DataGrid, GridColDef } from "@mui/x-data-grid/index";
@@ -34,7 +34,7 @@ const columns: GridColDef[] = [
 ];
 
 const UserList = () => {
-  const [selected, setSelected] = React.useState<string[]>([]);
+  const [selected, setSelected] = useState<string[]>([]);
   const [deleteUser] = useDeleteUserMutation();
   const allUsers = useAppSelector((state) => state.userState.users);
   const [updateStatus] = useUpdateStatusMutation();
@@ -101,8 +101,8 @@ const UserList = () => {
         }}
         rows={allUsers}
         columns={columns}
-        pageSize={20}
-        rowsPerPageOptions={[20]}
+        pageSize={10}
+        rowsPerPageOptions={[10]}
         checkboxSelection
       />
     </div>

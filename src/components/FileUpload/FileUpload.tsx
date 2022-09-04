@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { Controller, useController, useFormContext } from "react-hook-form";
 
 import {
@@ -31,7 +31,7 @@ const CustomBox = styled(Box)({
   },
 });
 
-const FileUpload: React.FC<IProps> = ({ limit, multiple, name }) => {
+const FileUpload: FC<IProps> = ({ limit, multiple, name }) => {
   const {
     control,
     formState: { isSubmitting, errors },
@@ -168,7 +168,6 @@ const FileUpload: React.FC<IProps> = ({ limit, multiple, name }) => {
         sx={{ textAlign: "center", my: 1 }}
         error={!!errors[name]}
       >
-        {/* {errors[name] ? errors[name].message : ''} */}
       </FormHelperText>
 
       {fileList.length > 0 || singleFile.length > 0 ? (

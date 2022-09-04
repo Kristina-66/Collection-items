@@ -7,11 +7,8 @@ import CollectionItem from "../components/collection/collection.component";
 import { useGetAllCollectionsForUserQuery } from "../redux/api/collectionApi";
 
 const ProfilePage = () => {
-  const [openCollectionModal, setOpenCollectionModal] = useState(false);
   const { data: collections } = useGetAllCollectionsForUserQuery();
   const user = useAppSelector((state) => state.userState.user);
-
-  const allUsers = useAppSelector((state) => state.userState.users);
 
   return (
     <Container>

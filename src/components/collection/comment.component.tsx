@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import { format, parseISO } from "date-fns";
@@ -32,14 +32,14 @@ interface ICommentComponentProps {
 }
 
 const CommentComponent: FC<ICommentComponentProps> = ({ comments }) => {
-  const [open, setOpen] = React.useState(false);
-  const [filteredComments, setFilteredComments] = React.useState<
-    ICommentResponse[]
-  >([]);
+  const [open, setOpen] = useState(false);
+  const [filteredComments, setFilteredComments] = useState<ICommentResponse[]>(
+    []
+  );
   const user = useAppSelector((state) => state.userState.user);
   const isAdmin = user?.role === "admin";
   const location = useLocation();
-  const [openCommentModal, setOpenCommentModal] = React.useState(false);
+  const [openCommentModal, setOpenCommentModal] = useState(false);
   const { _id } = location.state as IItemResponse;
   const { createdAt } = location.state as ICommentResponse;
   const [createComment, { data, isLoading, isSuccess }] =

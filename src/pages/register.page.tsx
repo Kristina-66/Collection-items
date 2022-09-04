@@ -32,11 +32,11 @@ const LinkItem = styled(Link)`
 `;
 
 const registerSchema = object({
-  name: string().nonempty("Full name is required").max(100),
+  name: string().max(100, "Full name is required"),
   email: string()
     .nonempty("Email address is required")
     .email("Email Address is invalid"),
-  password: string().nonempty("Password is required").min(1),
+  password: string().min(1, "Password is required"),
   passwordConfirm: string().nonempty("Please confirm your password"),
 }).refine((data) => data.password === data.passwordConfirm, {
   path: ["passwordConfirm"],

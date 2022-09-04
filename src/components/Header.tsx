@@ -67,7 +67,6 @@ const Header = () => {
           <Typography variant="h6" sx={{ color: "white" }}>
             Collection items
           </Typography>
-
           <Box display="flex" sx={{ ml: "auto" }}>
             {!user && (
               <>

@@ -22,6 +22,7 @@ import LikeCount from "./like-count";
 import CommentItem from "./comment-item";
 
 import "./item.styles.css";
+import { useAppSelector } from "../../redux/store";
 
 const SERVER_ENDPOINT = process.env.REACT_APP_SERVER_ENDPOINT;
 
@@ -30,9 +31,12 @@ interface IItemProps {
 }
 
 const Item: FC<IItemProps> = ({ item }) => {
+ 
   const [openItemModal, setOpenItemModal] = useState(false);
   const [deleteItem, { isLoading, error, isSuccess, isError }] =
     useDeleteItemMutation();
+  const user = useAppSelector((state) => state.userState.user);
+  const isAdmin = user?.role === "admin";
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -122,39 +126,41 @@ const Item: FC<IItemProps> = ({ item }) => {
               {item.description}
             </Typography>
           </CardContent>
-          <CardActions>
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              width="100%"
-              sx={{ px: "0.5rem" }}
-            >
-              <LikeCount likes={item.likes} itemId={item._id} />
-              <CommentItem item={item} />
-              <Box></Box>
-              <div className="item-settings">
-                <li>
-                  <MoreHorizOutlinedIcon />
-                </li>
-                <ul className="menu">
-                  <li onClick={() => setOpenItemModal(true)}>
-                    <ModeEditOutlineOutlinedIcon
-                      fontSize="small"
-                      sx={{ mr: "0.6rem" }}
-                    />
-                    Edit
+            <CardActions>
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                width="100%"
+                sx={{ px: "0.5rem" }}
+                >
+                <LikeCount likes={item.likes} itemId={item._id} />
+                <CommentItem item={item} />
+                <Box></Box>
+                {user && (isAdmin || item.owner === user?._id) && (
+                <div className="item-settings">
+                  <li>
+                    <MoreHorizOutlinedIcon />
                   </li>
-                  <li onClick={() => onDeleteHandler(item._id)}>
-                    <DeleteOutlinedIcon
-                      fontSize="small"
-                      sx={{ mr: "0.6rem" }}
-                    />
-                    Delete
-                  </li>
-                </ul>
-              </div>
-            </Box>
-          </CardActions>
+                  <ul className="menu">
+                    <li onClick={() => setOpenItemModal(true)}>
+                      <ModeEditOutlineOutlinedIcon
+                        fontSize="small"
+                        sx={{ mr: "0.6rem" }}
+                      />
+                      Edit
+                    </li>
+                    <li onClick={() => onDeleteHandler(item._id)}>
+                      <DeleteOutlinedIcon
+                        fontSize="small"
+                        sx={{ mr: "0.6rem" }}
+                      />
+                      Delete
+                    </li>
+                  </ul>
+                </div>
+              )}
+              </Box>
+            </CardActions>
         </Card>
       </Grid>
     </>

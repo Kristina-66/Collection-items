@@ -36,7 +36,7 @@ const loginSchema = object({
   email: string()
     .nonempty("Email address is required")
     .email("Email Address is invalid"),
-  password: string().nonempty("Password is required").min(1),
+  password: string().min(1, " Password is required"),
 });
 
 export type LoginInput = TypeOf<typeof loginSchema>;
@@ -46,7 +46,6 @@ const LoginPage = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  // 👇 API Login Mutation
   const [loginUser, { isLoading, isError, error, isSuccess }] =
     useLoginUserMutation();
 

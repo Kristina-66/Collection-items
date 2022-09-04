@@ -19,7 +19,6 @@ const CollectionPage = () => {
   const { _id, name, description, image, category, owner } =
     location.state as ICollectionResponse;
   const { data: items, isSuccess } = useGetAllItemsInCollectionQuery(_id);
-
   const user = useAppSelector((state) => state.userState.user);
   const isAdmin = user?.role === "admin";
 
@@ -80,7 +79,7 @@ const CollectionPage = () => {
             <Button
               variant="contained"
               startIcon={<ArrowBackIcon />}
-              onClick={() => navigate("/profile")}
+              onClick={() => navigate("/")}
               sx={{
                 backgroundColor: "#5d8c9b",
                 "&:hover": {
@@ -88,7 +87,7 @@ const CollectionPage = () => {
                 },
               }}
             >
-              Back
+              Home
             </Button>
             {user && (isAdmin || owner === user?._id) && (
               <Button

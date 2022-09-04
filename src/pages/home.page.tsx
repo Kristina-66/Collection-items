@@ -8,6 +8,7 @@ import { useGetAllItemsQuery } from "../redux/api/itemApi";
 const HomePage = () => {
   const { data: collections } = useGetAllCollectionsQuery();
   const { data: items } = useGetAllItemsQuery();
+  
   return (
     <Container maxWidth="lg">
       <div style={{ height: 50, width: "100%" }}></div>

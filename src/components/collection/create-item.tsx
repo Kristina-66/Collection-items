@@ -16,8 +16,8 @@ interface ICreateItemProp {
 
 const createItemSchema = object({
   name: string().min(1, "name is required"),
-  hashtag: string().max(20).nonempty("Category is required"),
-  description: string().nonempty("Description is required"),
+  hashtag: string().max(20, "Hashtag is required"),
+  description: string().min(1,"Description is required"),
   image: z.instanceof(File),
 });
 

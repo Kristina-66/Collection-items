@@ -25,7 +25,6 @@ const CreateComment: FC<ICreateCommentProp> = ({
   itemId,
   createComment,
   isLoading,
-  isSuccess,
 }) => {
   const methods = useForm<ICreateComment>({
     resolver: zodResolver(createCommentSchema),

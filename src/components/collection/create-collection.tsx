@@ -15,8 +15,8 @@ interface ICreateCollectionProp {
 
 const createCollectionSchema = object({
   name: string().min(1, "name is required"),
-  category: string().max(20).nonempty("Category is required"),
-  description: string().nonempty("Description is required"),
+  category: string().max(20,"Category is required"),
+  description: string().max(150,"Description is required"),
   image: z.instanceof(File),
 });
 

@@ -10,6 +10,7 @@ interface ILikeCountProps {
   itemId: string;
 }
 const LikeCount: FC<ILikeCountProps> = ({ likes, itemId }) => {
+  const [open, setOpen] = useState(false);
   const [likeItem] = useLikeItemMutation();
   const [likeCount, setLikeCount] = useState(likes.length);
 
@@ -33,8 +34,8 @@ const LikeCount: FC<ILikeCountProps> = ({ likes, itemId }) => {
         color="secondary"
         onClick={onLikeClick}
       >
-        <IconButton aria-label="like">
-          <FavoriteIcon />
+        <IconButton aria-label="like" onClick={() => setOpen(!open)}>
+          {open ? <FavoriteIcon color="secondary" /> : <FavoriteIcon />}
         </IconButton>
       </Badge>
     </>
