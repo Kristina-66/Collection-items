@@ -101,6 +101,21 @@ export const userApi = createApi({
       },
       invalidatesTags: [{ type: 'Users', id: 'LIST' }],
     }),
+
+    updateRole: builder.mutation<
+    { acknowledged: boolean; modifiedCount: number; upsertedId: null; upsertedCount: number; matchedCount: number },
+    { id: string[], role: string }
+  >({
+    query(data) {
+      return {
+        url: '/role',
+        method: 'PATCH',
+        body: data,
+        credentials: 'include',
+      };
+    },
+    invalidatesTags: [{ type: 'Users', id: 'LIST' }],
+  }),
   }),
 
 });
@@ -110,4 +125,5 @@ export const {
   useGetMeQuery,
   useDeleteUserMutation,
   useUpdateStatusMutation,
+  useUpdateRoleMutation,
 } = userApi;

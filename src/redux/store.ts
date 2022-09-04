@@ -8,7 +8,6 @@ import { itemApi } from "./api/itemApi";
 import { commentApi } from "./api/commentApi";
 import collectionReducer from "./features/collectionSlice";
 import userReducer from "./features/userSlise";
-import commentReducer from "./features/commentSlice";
 
 export const store = configureStore({
   reducer: {

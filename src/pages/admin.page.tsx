@@ -8,7 +8,7 @@ const AdminPage = () => {
       <Box
         sx={{
           backgroundColor: "#5d8c9b",
-          mt: "1rem",
+          mt: "2rem",
           height: "6rem",
           display: "flex",
           alignItems: "center",
@@ -23,7 +23,16 @@ const AdminPage = () => {
           Admin Page
         </Typography>
       </Box>
-      <UserList />
+      <Box
+        sx={{
+          mb: "8rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <UserList />
+      </Box>
     </Container>
   );
 };

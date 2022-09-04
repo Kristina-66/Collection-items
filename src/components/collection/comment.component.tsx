@@ -37,6 +37,7 @@ const CommentComponent: FC<ICommentComponentProps> = ({ comments }) => {
     ICommentResponse[]
   >([]);
   const user = useAppSelector((state) => state.userState.user);
+  const isAdmin = user?.role === "admin";
   const location = useLocation();
   const [openCommentModal, setOpenCommentModal] = React.useState(false);
   const { _id } = location.state as IItemResponse;
@@ -96,9 +97,11 @@ const CommentComponent: FC<ICommentComponentProps> = ({ comments }) => {
                   <Typography sx={{ textAlign: "left", color: "gray" }}>
                     {format(parseISO(createdAt), "PPP")}
                   </Typography>
-                  <IconButton onClick={() => onDeleteHandler(comment._id)}>
-                    <DeleteIcon />
-                  </IconButton>
+                  {user && (isAdmin || user.email === comment.email) && (
+                    <IconButton onClick={() => onDeleteHandler(comment._id)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  )}
                 </Box>
               </Grid>
             </Grid>

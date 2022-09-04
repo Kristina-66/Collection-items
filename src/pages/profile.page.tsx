@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import { Box, Container, IconButton, Tooltip, Typography } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
-import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 import { useAppSelector } from "../redux/store";
 import CollectionItem from "../components/collection/collection.component";
 import { useGetAllCollectionsForUserQuery } from "../redux/api/collectionApi";
@@ -77,18 +76,6 @@ const ProfilePage = () => {
         <Typography variant="h5" sx={{ color: "#212121", fontWeight: 100 }}>
           Your collections
         </Typography>
-        <Tooltip
-          title="Create collection"
-          onClick={() => setOpenCollectionModal(true)}
-        >
-          <IconButton
-            aria-label="Create"
-            size="large"
-            sx={{ color: "#212121" }}
-          >
-            <CreateNewFolderIcon fontSize="inherit" />
-          </IconButton>
-        </Tooltip>
       </Box>
       <Box
         sx={{

@@ -1,13 +1,9 @@
-import {
-  Box,
-  Container,
-  Grid,
-  Link,
-  IconButton,
-} from "@mui/material";
+import { Box, Container, Grid, Link, IconButton } from "@mui/material";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TelegramIcon from "@mui/icons-material/Telegram";
+import ImportContactsIcon from "@mui/icons-material/ImportContacts";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 const Footer = () => {
   return (
@@ -33,29 +29,13 @@ const Footer = () => {
           <Grid item xs={12} sm={4} textAlign="center">
             <Box textAlign="center" color="white">
               {" "}
-              Contact{" "}
+              Other:{" "}
             </Box>
             <Box>
-              <Link href="https://github.com/Melancholia66" color="inherit">
+              Book on typescript
+              <Link href="https://www.typescriptlang.org/docs/" color="inherit">
                 <IconButton sx={{ color: "#fff" }}>
-                  <GitHubIcon />
-                </IconButton>
-              </Link>
-            </Box>
-            <Box>
-              <Link href="https://t.me/melancholia66" color="inherit">
-                <IconButton sx={{ color: "#fff" }}>
-                  <InstagramIcon />
-                </IconButton>
-              </Link>
-            </Box>
-            <Box>
-              <Link
-                href="https://www.instagram.com/melancholia66/?igshid=YmMyMTA2M2Y%3D"
-                color="inherit"
-              >
-                <IconButton sx={{ color: "#fff" }}>
-                  <TelegramIcon />
+                  <ImportContactsIcon />
                 </IconButton>
               </Link>
             </Box>
@@ -63,7 +43,7 @@ const Footer = () => {
           <Grid item xs={12} sm={4} textAlign="center">
             <Box textAlign="center" color="white">
               {" "}
-              Contact{" "}
+              Contact:{" "}
             </Box>
             <Box>
               <Link href="https://github.com/Melancholia66" color="inherit">
@@ -71,21 +51,25 @@ const Footer = () => {
                   <GitHubIcon />
                 </IconButton>
               </Link>
-            </Box>
-            <Box>
               <Link href="https://t.me/melancholia66" color="inherit">
                 <IconButton sx={{ color: "#fff" }}>
                   <InstagramIcon />
                 </IconButton>
               </Link>
-            </Box>
-            <Box>
               <Link
                 href="https://www.instagram.com/melancholia66/?igshid=YmMyMTA2M2Y%3D"
                 color="inherit"
               >
                 <IconButton sx={{ color: "#fff" }}>
                   <TelegramIcon />
+                </IconButton>
+              </Link>
+              <Link
+                href="https://www.linkedin.com/in/kristina-ignatovich-855582238/"
+                color="inherit"
+              >
+                <IconButton sx={{ color: "#fff" }}>
+                  <LinkedInIcon />
                 </IconButton>
               </Link>
             </Box>

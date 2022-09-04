@@ -53,7 +53,7 @@ export const itemApi = createApi({
       },
       providesTags: (result, error, id) => [{ type: "Item", id }],
     }),
-    getAllItems: builder.query<IItemResponse[], string>({
+    getAllItemsInCollection: builder.query<IItemResponse[], string>({
       query(id) {
         return {
           url: `/${id}`,
@@ -73,6 +73,27 @@ export const itemApi = createApi({
       transformResponse: (results: { data: { items: IItemResponse[] } }) =>
         results.data.items,
     }),
+    getAllItems: builder.query<IItemResponse[], void>({
+      query() {
+        return {
+          url: `/all`,
+          credentials: "include",
+        };
+      },
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ _id }) => ({
+                type: "Item" as const,
+                _id,
+              })),
+              { type: "Item", id: "LIST" },
+            ]
+          : [{ type: "Item", id: "LIST" }],
+      transformResponse: (results: { data: { items: IItemResponse[] } }) =>
+        results.data.items,
+    }),
+
     deleteItem: builder.mutation<IItemResponse, string>({
       query(id) {
         return {
@@ -92,7 +113,8 @@ export const itemApi = createApi({
           credentials: "include",
         };
       },
-      transformResponse: (data: { like: ILike[] }) => data.like,
+      transformResponse: (result: { data: { like: ILike[] } }) =>
+        result.data.like,
     }),
   }),
 });
@@ -101,6 +123,7 @@ export const {
   useCreateItemMutation,
   useDeleteItemMutation,
   useUpdateItemMutation,
+  useGetAllItemsInCollectionQuery,
   useGetAllItemsQuery,
   useLikeItemMutation,
 } = itemApi;

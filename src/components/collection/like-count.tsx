@@ -10,29 +10,16 @@ interface ILikeCountProps {
   itemId: string;
 }
 const LikeCount: FC<ILikeCountProps> = ({ likes, itemId }) => {
-  const [likeItem, { data, isSuccess }] = useLikeItemMutation();
+  const [likeItem] = useLikeItemMutation();
   const [likeCount, setLikeCount] = useState(likes.length);
 
-  const getLikeCount = () => {
-    console.log(data);
-    if (isSuccess && data !== undefined) {
-      if (data!.length > 0) {
-        setLikeCount(data!.length);
-        return;
-      }
-      setLikeCount(likes.length - 1);
+  const onLikeClick = async () => {
+    const likes = await likeItem(itemId).unwrap();
+    if (likes.length === 0) {
+      setLikeCount((prev) => prev - 1);
       return;
     }
     setLikeCount(likes.length);
-    return;
-  };
-
-  isSuccess ?? console.log(data);
-  const onLikeClick = () => {
-    likeItem(itemId);
-    setTimeout(() => {
-      getLikeCount();
-    }, 1000);
   };
 
   return (

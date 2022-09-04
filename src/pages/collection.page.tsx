@@ -5,7 +5,7 @@ import { Box, Container, Typography, Stack, Button } from "@mui/material";
 import { Image } from "mui-image";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useGetAllItemsQuery } from "../redux/api/itemApi";
+import { useGetAllItemsInCollectionQuery } from "../redux/api/itemApi";
 import { ICollectionResponse } from "../redux/api/types";
 import { useAppSelector } from "../redux/store";
 import Item from "../components/collection/item.component";
@@ -18,7 +18,7 @@ const CollectionPage = () => {
   const location = useLocation();
   const { _id, name, description, image, category, owner } =
     location.state as ICollectionResponse;
-  const { data: items, isSuccess } = useGetAllItemsQuery(_id);
+  const { data: items, isSuccess } = useGetAllItemsInCollectionQuery(_id);
 
   const user = useAppSelector((state) => state.userState.user);
   const isAdmin = user?.role === "admin";

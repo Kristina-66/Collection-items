@@ -43,6 +43,7 @@ export interface IItemResponse {
   owner: string;
   likes: ILike[];
   comments: ICommentResponse[];
+  itemCollection: string;
   ownerInfo: IUser[];
   ownerName: string;
   createdAt: string;

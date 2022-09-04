@@ -7,6 +7,7 @@ import { userApi } from "../redux/api/userApi";
 import {
   useDeleteUserMutation,
   useUpdateStatusMutation,
+  useUpdateRoleMutation,
 } from "../redux/api/userApi";
 import EnhancedTableToolbar from "./EnhancedTableToolbar";
 
@@ -21,10 +22,9 @@ const columns: GridColDef[] = [
     width: 210,
   },
   {
-    field: "lastLogin",
-    headerName: "Last date login",
-    type: "number",
-    width: 210,
+    field: "role",
+    headerName: "Role",
+    width: 110,
   },
   {
     field: "status",
@@ -39,6 +39,8 @@ const UserList = () => {
   const allUsers = useAppSelector((state) => state.userState.users);
   const [updateStatus] = useUpdateStatusMutation();
   const [updateStatusActiv] = useUpdateStatusMutation();
+  const [updateRole] = useUpdateRoleMutation();
+  const [updateRoleUser] = useUpdateRoleMutation();
   const { isLoading, isError, error } = userApi.endpoints.getAllUsers.useQuery(
     [],
     { refetchOnMountOrArgChange: true }
@@ -72,6 +74,14 @@ const UserList = () => {
     updateStatusActiv({ id: selected, status: "active" });
   };
 
+  const handleRoleUpdate = () => {
+    updateRole({ id: selected, role: "admin" });
+  };
+
+  const handleRoleUpdateUser = () => {
+    updateRoleUser({ id: selected, role: "user" });
+  };
+
   return (
     <div style={{ height: 500, width: "100%", marginTop: "40px" }}>
       {isLoading && <div>Loading...</div>}
@@ -81,6 +91,8 @@ const UserList = () => {
         handleDelete={handleDelete}
         handleStatusUpdate={handleStatusUpdate}
         handleStatusUpdateActive={handleStatusUpdateActive}
+        handleRoleUpdate={handleRoleUpdate}
+        handleRoleUpdateUser={handleRoleUpdateUser}
       />
       <DataGrid
         onSelectionModelChange={(newSelectionModel) => {
