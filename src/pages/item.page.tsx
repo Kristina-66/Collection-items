@@ -74,15 +74,6 @@ const ItemPage = () => {
             <strong>Created: </strong>
             {format(parseISO(createdAt), "PPP")}
           </Typography>
-
-          <Typography
-            variant="h6"
-            align="center"
-            color="text.secondary"
-            paragraph
-          >
-            <strong>Collection:</strong> {collection.name}
-          </Typography>
           <Typography
             variant="h6"
             align="center"
