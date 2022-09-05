@@ -31,7 +31,6 @@ interface IItemProps {
 }
 
 const Item: FC<IItemProps> = ({ item }) => {
- 
   const [openItemModal, setOpenItemModal] = useState(false);
   const [deleteItem, { isLoading, error, isSuccess, isError }] =
     useDeleteItemMutation();
@@ -123,20 +122,22 @@ const Item: FC<IItemProps> = ({ item }) => {
                 p: "0.1rem 0.4rem",
               }}
             >
-              {item.description}
+              {item?.description?.length > 70
+                ? item.description.substring(0, 70) + "..."
+                : item.description}
             </Typography>
           </CardContent>
-            <CardActions>
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                width="100%"
-                sx={{ px: "0.5rem" }}
-                >
-                <LikeCount likes={item.likes} itemId={item._id} />
-                <CommentItem item={item} />
-                <Box></Box>
-                {user && (isAdmin || item.owner === user?._id) && (
+          <CardActions>
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              width="100%"
+              sx={{ px: "0.5rem" }}
+            >
+              <LikeCount likes={item.likes} itemId={item._id} />
+              <CommentItem item={item} />
+              <Box></Box>
+              {user && (isAdmin || item.owner === user?._id) && (
                 <div className="item-settings">
                   <li>
                     <MoreHorizOutlinedIcon />
@@ -159,8 +160,8 @@ const Item: FC<IItemProps> = ({ item }) => {
                   </ul>
                 </div>
               )}
-              </Box>
-            </CardActions>
+            </Box>
+          </CardActions>
         </Card>
       </Grid>
     </>

@@ -69,7 +69,7 @@ const CollectionItem: FC<ICollectionItemProps> = ({ collection }) => {
   return (
     <>
       <Grid item xs={12} md={6} lg={4}>
-        <Card sx={{ maxWidth: 272, minWidth: 272, minHeight: 506 }}>
+        <Card sx={{ maxWidth: 272, minWidth: 272, minHeight: 506, maxHeight: 506 }}>
           <CardHeader
             avatar={
               <CollectionsIcon fontSize="large" sx={{ color: "#2b4047d6" }} />
