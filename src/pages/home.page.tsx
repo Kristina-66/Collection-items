@@ -33,7 +33,7 @@ const HomePage = () => {
         }}
       >
         {items?.map((item) => (
-          <Item key={item._id} item={item} />
+          <Item key={item._id} item={item}  />
         ))}
       </Box>
     </Container>

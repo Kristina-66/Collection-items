@@ -4,18 +4,33 @@ import { format, parseISO } from "date-fns";
 import { Box, Container, Typography } from "@mui/material";
 import { Image } from "mui-image";
 import CommentComponent from "../components/collection/comment.component";
-import { IItemResponse } from "../redux/api/types";
-import { ICommentResponse } from "../redux/api/types";
+import {
+  ICollectionResponse,
+  IItemResponse,
+} from "../redux/api/types";
+import LikeCount from "../components/collection/like-count";
 
 const ItemPage = () => {
   const location = useLocation();
-  const { name, hashtag, description, image, createdAt, comments, ownerName, } =
-    location.state as IItemResponse;
-  const comment = location.state as ICommentResponse;
+  const {
+    name,
+    hashtag,
+    description,
+    image,
+    createdAt,
+    comments,
+    ownerName,
+    _id,
+    likes,
+  } = location.state as IItemResponse;
+  const collection = location.state as ICollectionResponse;
   return (
     <Container maxWidth="lg">
       <Box sx={{ mt: 2 }}>
         <Image src={image} fit="scale-down" height={300} />
+      </Box>
+      <Box sx={{ mt: 2, display: "flex", justifyContent: "space-around"}}>
+      <LikeCount likes={likes} itemId={_id} />
       </Box>
       <Box
         sx={{
@@ -34,7 +49,6 @@ const ItemPage = () => {
           >
             {name}
           </Typography>
-
           <Typography
             variant="h5"
             align="center"
@@ -67,7 +81,7 @@ const ItemPage = () => {
             color="text.secondary"
             paragraph
           >
-            <strong>Collection:</strong>
+            <strong>Collection:</strong> {collection.name}
           </Typography>
           <Typography
             variant="h6"
@@ -75,11 +89,11 @@ const ItemPage = () => {
             color="text.secondary"
             paragraph
           >
-            <strong>Owner:</strong>{ownerName}
+            <strong>Owner:</strong>
+            {ownerName}
           </Typography>
         </Container>
       </Box>
-
       <Box
         sx={{
           display: "flex",

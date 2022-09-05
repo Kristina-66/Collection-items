@@ -115,7 +115,7 @@ const CollectionPage = () => {
           flexWrap: "wrap",
         }}
       >
-        {isSuccess && items?.map((item) => <Item item={item}></Item>)}
+        {isSuccess && items?.map((item) => <Item item={item}></Item> )}
       </Box>
       <ItemModal
         openItemModal={openItemModal}

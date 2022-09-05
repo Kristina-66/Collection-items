@@ -1,10 +1,10 @@
-import { useCookies } from "react-cookie";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { userApi } from "../redux/api/userApi";
+import { useAppSelector } from "../redux/store";
 import FullScreenLoader from "./FullScreenLoader";
 
 const RequireUser = ({ allowedRoles }: { allowedRoles: string[] }) => {
-  const [cookies] = useCookies(["logged_in"]);
+  const loggedIn = useAppSelector((state) => state.userState.user);
   const location = useLocation();
 
   const { isLoading, isFetching } = userApi.endpoints.getMe.useQuery(null, {
@@ -20,10 +20,10 @@ const RequireUser = ({ allowedRoles }: { allowedRoles: string[] }) => {
     return <FullScreenLoader />;
   }
 
-  return (cookies.logged_in || user) &&
+  return (loggedIn || user) &&
     allowedRoles.includes(user?.role as string) ? (
     <Outlet />
-  ) : cookies.logged_in && user ? (
+  ) : loggedIn && user ? (
     <Navigate to="/unauthorized" state={{ from: location }} replace />
   ) : (
     <Navigate to="/login" state={{ from: location }} replace />

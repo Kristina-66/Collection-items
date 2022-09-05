@@ -35,7 +35,7 @@ const LikeCount: FC<ILikeCountProps> = ({ likes, itemId }) => {
         onClick={onLikeClick}
       >
         <IconButton aria-label="like" onClick={() => setOpen(!open)}>
-          {open ? <FavoriteIcon color="secondary" /> : <FavoriteIcon />}
+        <FavoriteIcon />
         </IconButton>
       </Badge>
     </>
